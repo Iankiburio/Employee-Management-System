@@ -40,6 +40,29 @@ def get_leave_requests():
         })
     return jsonify({'leave_requests': leave_requests_data})
 
+
+# Route to create a new leave request
+@app.route('/leave-requests', methods=['POST'])
+def create_leave_request():
+    print("Leave request not foun")
+    data = request.get_json()
+    print(request.get_json())
+    new_request = Employee_Leaverequest(
+        leavetype_ID=data['leavetype_ID'],
+        start_date=data['start_date'],
+        end_date=data['end_date'],
+        status=data['status'],
+        admin_comment=data['admin_comment'],
+        action=data['action'],
+        Return_date=data['Return_date'],
+        leave_balances=data['leave_balances'],
+        employee_ID=data['employee_ID']
+    )
+    db.session.add(new_request)
+    db.session.commit()
+    return jsonify({'message': 'Leave request created successfully'})
+
+
 # Route to get all leave types
 @app.route('/leave-types', methods=['GET'])
 def get_leave_types():
@@ -57,6 +80,5 @@ def get_leave_types():
 
 
 if __name__ == '__main__':
-    #db.create_all()
     app.run(debug=True)
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ employee.name }}!</h1>
+
+    <!-- Employee Information -->
+    <section>
+        <h2>Your Information</h2>
+        <ul>
+            <li>Name: {{ employee.name }}</li>
+            <li>Position: {{ employee.position }}</li>
+            <li>Department: {{ employee.department }}</li>
+            <li>Contact Info: {{ employee.contact_info }}</li>
+        </ul>
+    </section>
+
+    <!-- Salary Information -->
+    <section>
+        <h2>Your Salary Information</h2>
+        <ul>
+            <li>Basic Salary: {{ employee.basic_salary }}</li>
+            <li>Deductions: {{ employee.deductions }}</li>
+            <li>Bonuses: {{ employee.bonuses }}</li>
+            <li>Leave Balance: {{ employee.leave_balance }}</li>
+        </ul>
+    </section>
+
+<!-- Leave Request Form -->
+<section>
+    <h2>Submit Leave Request</h2>
+    <form method="post" action="{{ url_for('employee_leave_request', employee_id=employee.id) }}">
+        <label for="start_date">Start Date:</label>
+        {{ form.start_date(class="form-control", type="date") }}
+        
+        <label for="end_date">End Date:</label>
+        {{ form.end_date(class="form-control", type="date") }}
+        
+        <button type="submit">Submit Leave Request</button>
+    </form>
+</section>
+
+
+
+    <!-- Leave Request History -->
+    <section>
+        <h2>Your Leave Requests</h2>
+        <ul>
+            {% for leave_request in employee.leave_requests %}
+                <li>{{ leave_request.start_date }} to {{ leave_request.end_date }} - Status: {{ leave_request.status }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>

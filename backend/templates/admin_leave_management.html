@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Leave Management</title>
+</head>
+<body>
+    <h1>Leave Management for {{ employee.name }}</h1>
+    <h2>Leave Requests</h2>
+    <ul>
+        {% for leave_request in leave_requests %}
+            <li>
+                {{ leave_request.start_date }} to {{ leave_request.end_date }} - Status: {{ leave_request.status }}
+                <form method="post" action="{{ url_for('admin_leave_management', employee_id=employee.id) }}">
+                    <input type="hidden" name="leave_request_id" value="{{ leave_request.id }}">
+                    <button type="submit" name="action" value="approve">Approve</button>
+                    <button type="submit" name="action" value="reject">Reject</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

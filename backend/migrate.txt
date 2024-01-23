@@ -1,3 +1,3 @@
-export FLASK_APP=server/app.py
+export FLASK_APP=serverapp.py
 flask db migrate
 flask db upgrade

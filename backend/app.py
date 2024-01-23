@@ -1,207 +1,131 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, IntegerField, SubmitField, DateField
-from wtforms.validators import DataRequired
+from flask import Flask, request, jsonify
 from datetime import datetime
-from wtforms.widgets import Input
+from flask_migrate import Migrate
+from models import db, Employee, Attendance
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///employees_management.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///employee_management.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your-secret-key'
 
-db = SQLAlchemy(app)
+db.init_app(app)
 migrate = Migrate(app, db)
 
-# Employee Model
-class Employee(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    position = db.Column(db.String(255), nullable=False)
-    department = db.Column(db.String(255))
-    contact_info = db.Column(db.String(255))
-    basic_salary = db.Column(db.Float, nullable=False)
-    deductions = db.Column(db.Float, default=0.0)
-    bonuses = db.Column(db.Float, default=0.0)
-    leave_balance = db.Column(db.Integer, default=0)
-    attendances = db.relationship('Attendance', backref='employee', lazy=True)
-    leave_requests = db.relationship('LeaveRequest', backref='employee', lazy=True)
+# Calculate dynamic values for salary, deductions, bonuses, and taxes
+def calculate_salary(employee):
+    base_salary = employee.base_salary
+    deductions_percentage = 0.1  # 10% deductions
+    bonuses_percentage = 0.05    # 5% bonuses
+    tax_percentage = 0.15        # 15% taxes
+    
+    employee.deductions = base_salary * deductions_percentage
+    employee.bonuses = base_salary * bonuses_percentage
+    employee.tax = base_salary * tax_percentage
+    
+    # Calculate net salary
+    employee.net_salary = base_salary - employee.deductions + employee.bonuses - employee.tax
 
-# Leave Request Model
-class LeaveRequest(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    start_date = db.Column(db.Date, nullable=False)
-    end_date = db.Column(db.Date, nullable=False)
-    status = db.Column(db.String(50), default='Pending')
-    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+# Function to generate salary slip for an employee
+def generate_salary_slip(employee):
+    salary_slip = {
+        'employee_id': employee.id,
+        'name': employee.name,
+        'salary': employee.base_salary,
+        'deductions': employee.deductions,
+        'bonuses': employee.bonuses,
+        'net_salary': employee.net_salary
+    }
+    return salary_slip
 
-# Attendance Model
-class Attendance(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    clock_in = db.Column(db.DateTime, nullable=False)
-    clock_out = db.Column(db.DateTime)
-    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+# Admin routes
 
-# Forms
-class DatePickerWidget(Input):
-    input_type = 'date'
+# Endpoint for the admin to process monthly payroll for all employees or a specific employee
+@app.route('/admin/process_monthly_payroll', methods=['POST'])
+def admin_process_monthly_payroll():
+    data = request.get_json()
 
-class LeaveRequestForm(FlaskForm):
-    start_date = DateField('Start Date', validators=[DataRequired()], widget=DatePickerWidget())
-    end_date = DateField('End Date', validators=[DataRequired()], widget=DatePickerWidget())
-    submit = SubmitField('Submit Leave Request')
-
-# Routes
-
-# Admin Dashboard
-@app.route('/admin')
-def admin_dashboard():
-    employees = Employee.query.all()
-    return render_template('admin_dashboard.html', employees=employees)
-
-# Admin Employee Details
-@app.route('/admin/employee_details/<int:employee_id>')
-def admin_employee_details(employee_id):
-    employee = Employee.query.get_or_404(employee_id)
-    return render_template('admin_employee_details.html', employee=employee)
-
-# Leave Management for Admin
-@app.route('/admin/leave_management/<int:employee_id>', methods=['GET', 'POST'])
-def admin_leave_management(employee_id):
-    if request.method == 'POST':
-        leave_request_id = request.form.get('leave_request_id')
-        action = request.form.get('action')
-
-        if action == 'approve':
-            leave_request = LeaveRequest.query.get_or_404(leave_request_id)
-            leave_request.status = 'Approved'
+    if 'employee_id' in data:
+        # Process payroll for a specific employee
+        employee_id = data['employee_id']
+        employee = Employee.query.get(employee_id)
+        if employee:
+            calculate_salary(employee)
             db.session.commit()
-
-        elif action == 'reject':
-            leave_request = LeaveRequest.query.get_or_404(leave_request_id)
-            leave_request.status = 'Rejected'
-            db.session.commit()
-
-    employee = Employee.query.get_or_404(employee_id)
-    leave_requests = LeaveRequest.query.filter_by(employee_id=employee_id).all()
-
-    return render_template('admin_leave_management.html', employee=employee, leave_requests=leave_requests)
-
-# Process Monthly Payroll for Admin
-@app.route('/admin/process_payroll', methods=['GET', 'POST'])
-def admin_process_payroll():
-    if request.method == 'POST':
-        for employee in Employee.query.all():
-            total_salary = employee.basic_salary - employee.deductions + employee.bonuses
-            employee.leave_balance += 2
-            db.session.commit()
-
-        return redirect(url_for('admin_dashboard'))
-
-    employees = Employee.query.all()
-    return render_template('admin_process_payroll.html', employees=employees)
-
-# Attendance Tracking for Admin
-@app.route('/admin/attendance_tracking/<int:employee_id>')
-def admin_attendance_tracking(employee_id):
-    employee = Employee.query.get_or_404(employee_id)
-    attendances = Attendance.query.filter_by(employee_id=employee_id).all()
-
-    return render_template('admin_attendance_tracking.html', employee=employee, attendances=attendances)
-
-# Employee Dashboard
-@app.route('/employee_dashboard/<int:employee_id>', methods=['GET', 'POST'])
-def employee_dashboard(employee_id):
-    employee = Employee.query.get_or_404(employee_id)
-    form = LeaveRequestForm()  # Create an instance of the form
-
-    if request.method == 'POST' and form.validate_on_submit():
-        # Process form submission if needed
-        pass
-
-    return render_template('employee_dashboard.html', employee=employee, form=form)
-
-# Leave Request Management for Employees
-from datetime import datetime
-
-# ...
-
-@app.route('/employee_leave_request/<int:employee_id>', methods=['POST'])
-def employee_leave_request(employee_id):
-    employee = Employee.query.get_or_404(employee_id)
-    form = LeaveRequestForm()
-
-    if form.validate_on_submit():
-        start_date_str = form.start_date.data
-        end_date_str = form.end_date.data
-
-        # Convert date strings to Python date objects
-        start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
-        end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
-
-        # Create LeaveRequest object
-        leave_request = LeaveRequest(
-            start_date=start_date,
-            end_date=end_date,
-            employee_id=employee_id
-        )
-
-        # Add and commit to the database
-        db.session.add(leave_request)
+            return jsonify({'message': f'Monthly payroll processed successfully for employee {employee_id}'})
+        else:
+            return jsonify({'error': 'Employee not found'})
+    else:
+        # Process payroll for all employees
+        employees = Employee.query.all()
+        for employee in employees:
+            calculate_salary(employee)
         db.session.commit()
+        return jsonify({'message': 'Monthly payroll processed successfully for all employees'})
 
-        return redirect(url_for('employee_dashboard', employee_id=employee_id))
+# Function to generate salary slips for all employees
+def generate_salary_slips():
+    employees = Employee.query.all()
+    salary_slips = [generate_salary_slip(employee) for employee in employees]
+    return salary_slips
 
-    return render_template('employee_dashboard.html', form=form, employee=employee)
+# Endpoint for the admin to generate salary slips for all employees
+@app.route('/admin/generate_salary_slips', methods=['POST'])
+def admin_generate_salary_slips():
+    salary_slips = generate_salary_slips()
+    return jsonify({'salary_slips': salary_slips})
 
-# View Leave Request Status and History for Employees
-@app.route('/employee/leave_status_history/<int:employee_id>')
-def employee_leave_status_history(employee_id):
-    employee = Employee.query.get_or_404(employee_id)
-    leave_requests = LeaveRequest.query.filter_by(employee_id=employee_id).all()
-
-    return render_template('employee_leave_status_history.html', employee=employee, leave_requests=leave_requests)
-
-# Access to Salary Information for Employees
-@app.route('/employee/salary_info/<int:employee_id>')
-def employee_salary_info(employee_id):
-    employee = Employee.query.get_or_404(employee_id)
-    # Fetch salary-related information for the employee
-    # ...
-
-    return render_template('employee_salary_info.html', employee=employee)
-
-def seed_database():
-    if Employee.query.count() == 0:
-        employee1 = Employee(
-            name='Brian Chege',
-            position='Software Engineer',
-            department='IT',
-            contact_info='brianchege@gmail.com',
-            basic_salary=60000.0,
-            deductions=2000.0,
-            bonuses=5000.0,
-            leave_balance=20
-        )
-        db.session.add(employee1)
-
-        employee2 = Employee(
-            name='Ian Kiburio',
-            position='Marketing Manager',
-            department='Marketing',
-            contact_info='adenian@gmail.com',
-            basic_salary=70000.0,
-            deductions=2500.0,
-            bonuses=6000.0,
-            leave_balance=18
-        )
-        db.session.add(employee2)
-
+# Endpoint for the admin to generate payroll for a specific employee
+@app.route('/admin/generate_payroll/<employee_id>', methods=['POST'])
+def admin_generate_payroll_for_employee(employee_id):
+    employee = Employee.query.get(employee_id)
+    if employee:
+        calculate_salary(employee)
         db.session.commit()
+        return jsonify({'message': f'Payroll generated successfully for employee {employee_id}'})
+    else:
+        return jsonify({'error': 'Employee not found'})
+
+
+# Endpoint for the admin to monitor employee attendance
+@app.route('/admin/record_attendance', methods=['POST'])
+def admin_record_attendance():
+    data = request.get_json()
+    employee_id = data.get('employee_id')
+    clock_in_time = datetime.strptime(data.get('clock_in_time'), "%Y-%m-%d %H:%M:%S")
+    clock_out_time = datetime.strptime(data.get('clock_out_time'), "%Y-%m-%d %H:%M:%S")
+
+    # Save attendance data to the database
+    attendance = Attendance(employee_id=employee_id, clock_in_time=clock_in_time, clock_out_time=clock_out_time)
+    db.session.add(attendance)
+    db.session.commit()
+
+    return jsonify({'message': 'Attendance recorded successfully'})
+
+# Endpoint for the admin to get attendance reports for a specific employee
+@app.route('/admin/get_attendance_report/<employee_id>', methods=['GET'])
+def admin_get_attendance_report(employee_id):
+    # Retrieve attendance data for a specific employee from the database
+    attendance_records = Attendance.query.filter_by(employee_id=employee_id).all()
+
+    # Format the attendance records
+    formatted_attendance = [{
+        'clock_in_time': record.clock_in_time.strftime("%Y-%m-%d %H:%M:%S"),
+        'clock_out_time': record.clock_out_time.strftime("%Y-%m-%d %H:%M:%S")
+    } for record in attendance_records]
+
+    return jsonify({'employee_id': employee_id, 'attendance': formatted_attendance})
+
+# Employee routes
+
+# Endpoint for the employee to get their salary slip
+@app.route('/employee/get_salary_slip/<employee_id>', methods=['GET'])
+def employee_get_salary_slip(employee_id):
+    employee = Employee.query.get(employee_id)
+    if employee:
+        salary_slip = generate_salary_slip(employee)
+        return jsonify({'salary_slip': salary_slip})
+    else:
+        return jsonify({'error': 'Employee not found'})
+
 
 if __name__ == '__main__':
-    db.create_all()
-    seed_database()
     app.run(debug=True)

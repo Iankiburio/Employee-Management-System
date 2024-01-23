@@ -1,33 +1,57 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_serializer import SerializerMixin
+
 
 db = SQLAlchemy()
 
-class Admin(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    username = db.Column(db.String(200),nullable=False)
-    first_name = db.Column(db.String(200),nullable=False)
-    last_name = db.Column(db.String(200),nullable=False)
-    email = db.Column(db.String(200),nullable=False)
-    password = db.Column(db.String(200),nullable=False)
+class Admin(db.Model, SerializerMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(200), nullable=False)
+    first_name = db.Column(db.String(200), nullable=False)
+    last_name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
-class Employee(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    first_name = db.Column(db.String(200),nullable=False)
-    last_name = db.Column(db.String(200),nullable=False)
-    email = db.Column(db.String(200),nullable=False)
-    password = db.Column(db.String(200),nullable=False)
-    department = db.Column(db.String(200),nullable=False)
-    role = db.Column(db.String(200),nullable=False)
-    bank_account = db.Column(db.Integer,nullable=False)
-    gender = db.Column(db.String(200),nullable=False)
-    joining_date = db.Column(db.Date,nullable=False)
-    birth_date = db.Column(db.Date,nullable=False)
-    contact = db.Column(db.Integer,nullable=False)
+    def validate_email(self):
+        if '@' not in self.email:
+            raise ValueError('Invalid email address')
 
-class User(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    user = db.Column(db.String(200),nullable=False)
-    password = db.Column(db.String(200),nullable=False)
+
+class Employee(db.Model, SerializerMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(200), nullable=False)
+    last_name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    department = db.Column(db.String(200), nullable=False)
+    role = db.Column(db.String(200), nullable=False)
+    bank_account = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(200), nullable=False)
+    joining_date = db.Column(db.Date, nullable=False)
+    birth_date = db.Column(db.Date, nullable=False)
+    contact = db.Column(db.Integer, nullable=False)
+
+    def validate_email(self):
+        if '@' not in self.email:
+            raise ValueError('Invalid email address')
+
+    def validate_password(self, password):
+        # Password must be at least 6 characters long
+        if len(password) < 6:
+            raise ValueError('Password must be at least 6 characters long')
+
+        # Password must contain at least one uppercase letter
+        if not any(char.isupper() for char in password):
+            raise ValueError('Password must contain at least one uppercase letter')
+
+        # Password must contain at least one special character
+        special_characters = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?"
+        if not any(char in special_characters for char in password):
+            raise ValueError('Password must contain at least one special character')
+class User(db.Model, SerializerMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
 class Payroll(db.Model):
     id = db.Column(db.Integer,primary_key=True)

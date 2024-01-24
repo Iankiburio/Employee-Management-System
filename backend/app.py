@@ -64,7 +64,7 @@ def notifications():
         return notification_data
 
 
-@app.route('/notifications/<int:id>', methods=['POST','DELETE'])
+@app.route('/notifications/<int:notification_id>', methods=['POST','DELETE'])
 def get_approval(notification_id):
     
     approval = Notification.query.filter_by(notification_id=notification_id).first()

@@ -31,71 +31,83 @@ class Index(Resource):
         return response
 api.add_resource(Index, '/')
 
-class Notification(Resource):
-    def get(self):
-        notifications = Notification.query.all()
+
+@app.route('/notifications', methods=['GET','POST'])
+def notifications():
+    
+     if request.method == 'GET':
+        notifications = [notifications.to_dict() for notifications in Notification.query.all()]
+        
 
         response = make_response(
             jsonify(notifications),
-            200,
+            200
         )
-        
         return response
-    
-    def post(self):
+
+     elif request.method == 'POST':
         notification_data = request.get_json()
-        new_notifications = Notification(
+        new_notification = Notification(
             admin_id = notification_data['admin_id'],
             employee_id = notification_data['employee_id'],
             timestamp = notification_data['timestamp'],
             action = notification_data['action'],
         )
-        db.session.add(new_notifications)
+
+        db.session.add(new_notification)
         db.session.commit()
 
-        response_dict = new_notifications.to_dict()
-
-        response= make_response(
-            jsonify(response_dict), 201
-        )
-
-        return response
-    
-api.add_resource(Notification, '/notifications')    
-
-    
-class NotificationbyId(Resource): #retrieve a single notification
-    def get(self,id):
-        response_dict = Notification.query.filter_by(id=id).first().to_dict()
-
         response = make_response(
-            jsonify(response_dict),
-            200,
+            jsonify(new_notification.to_dict()),
+            201
         )
+        return notification_data
 
-        return response
+
+@app.route('/notifications/<int:id>', methods=['POST','DELETE'])
+def get_approval(notification_id):
     
+    approval = Notification.query.filter_by(notification_id=notification_id).first()
 
 
-#class NotificationbyId(Resource): #Delete a specific notification
+    if request.method == 'POST':
+        notification_data = request.get_json()
+        for attr in notification_data:
+            setattr(approval,attr,notification_data[attr])
 
-    def delete(self,id):
-        notifications = Notification.query.filter_by(id=id).first()
+            db.session.add(approval)
+            db.session.commit()
 
-        db.session.delete(notifications)
+            response = make_response(
+                jsonify(
+                
+                {
+                "message": "Your Leave has been approved."
+            }
+            ),
+            200
+        )
+    
+        return response
+            
+    
+    elif request.method == 'DELETE':
+       
+        db.session.delete(approval)
         db.session.commit()
 
-        response_dict = {"message": "Notification successfully deleted"}
-
         response = make_response(
-            jsonify(response_dict), 200
+            jsonify(
+                
+                {
+                "message": "Notifications deleted Successfully."
+            }
+            ),
+            200
         )
-
-        return response
     
-app.add_resource(NotificationbyId, '/notifications/<int:id>')    
-
+        return response
 
 if __name__ == '__main__':
-    app.run(port=5554, debug=True)
+    app.run(port=5555, debug=True)
 

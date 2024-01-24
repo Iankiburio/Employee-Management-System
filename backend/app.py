@@ -108,6 +108,83 @@ def get_approval(notification_id):
     
         return response
 
+#CALENDAR that displays all the days and months of the week
+    
+import calendar   
+#year = int(input('Enter the year to be displayed'))
+#print(calendar.prcal(year)) # go to the terminal and run python app.py then enter the year to display.
+#function to create a holiday calendar
+
+def get_holiday_calendar(holiday, company):
+    holiday_data = {
+        'holiday_id': holiday.id,
+        'holiday_name': holiday.name,
+        'holiday_date': holiday.date,
+        'event_id': company.event_id,
+        'event_dscription': company.event_dscription
+    }
+
+    return holiday_data
+
+#company events
+@app.route('/events', methods=['POST'])
+def create_event():
+    event = request.json
+    new_event = Holidaycalendar(
+        event_id = event.get('company_event_id'),
+        event_description = event.get('company_event_description')
+    )
+
+    db.session.add(new_event)
+    db.session.commit()
+
+    return jsonify({
+        'success': True,
+        'event': 'New event has been created'}), 201
+
+@app.route('events/<int:event_id>', methods=['GET'])
+def get_event(event_id):
+    event = Holidaycalendar.query.filter(event_id = event_id).all()
+    if event is None:
+        return "No event created"
+    return jsonify({"event": "We have a company event"}), 200
+
+@app.route('events', methods=['DELETE'])
+def delete(event_id):
+        company_event = Holidaycalendar.query.filter_by(event_id=event_id).all()
+
+        db.session.delete(company_event)
+        db.session.commit()
+
+        return jsonify({"message": "Event successfully deleted"})
+
+#Holidays
+@app.route('/holidays', methods=['GET'])
+def get_all_holidays():
+    data = Holidaycalendar.query.all()
+    data = {
+        'holiday_id': data.holiday_id,
+        'holiday_name': data.holiday_name,
+        'holiday_date': data.holiday_date
+    }
+
+    return jsonify(data)
+
+@app.route('holidays/<int:holiday_id>', methods=['GET'])
+def get_holiday(holiday_id):
+    holiday = Holidaycalendar.query.filter(holiday_id = holiday_id).all()
+    if holiday:
+        return jsonify({'holiday': holiday})
+    
+    else:
+        return jsonify({'message': 'normal working day'})
+    
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
+
+
+
+
 

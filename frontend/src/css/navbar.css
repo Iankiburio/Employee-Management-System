@@ -1,0 +1,23 @@
+/* Style links in the navbar */
+.navbar a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* Style active link */
+.navbar a.active {
+    background-color: #777;
+  }
+
+
+.navbar {
+    width: 15%;
+    background-color: #555;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    height: 100%;
+    z-index: 1;
+  }

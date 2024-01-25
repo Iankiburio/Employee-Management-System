@@ -5,7 +5,7 @@ import '../css/navbar.css'
 function Navbar(){
 
     return(
-        <div>
+        <div className='navbar'>
             This is navbar
         </div>
     );

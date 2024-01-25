@@ -4,11 +4,11 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  box-sizing: border-box;
 }
 
 
 .body {
-  display: flex;
   flex: 1;
   overflow: hidden;
 }
@@ -16,9 +16,9 @@
 
 .pages {
   width: 85%;
+  float: right;
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
 }
-

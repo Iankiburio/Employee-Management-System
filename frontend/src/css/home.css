@@ -1,0 +1,73 @@
+.home {
+    display: flex;
+    background: white;
+    font-size: 50px;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    width: 100vh; /* 100% of the viewport width */
+    margin-left:25%;
+    margin-top: 10%;
+
+}
+
+.items{
+    padding: 50px;
+    background-color: rgb(243, 246, 246);
+}
+
+img {
+    width: 2000px;
+    height: 400px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-size: larger;
+    margin:50px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+  /* Add these styles to your CSS file */
+.admin-button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #000000;
+    background-color: #FFC107;
+    border: 1px solid #FFC107;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 40%;
+}
+
+.employee-button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #009688;
+    border: 1px solid #009688;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+  
+.role-button:hover {
+    background-color: #0056b3;
+}
+  
+.admin-button:hover {
+    background-color: #8d6c08;
+}
+
+.employee-button:hover {
+    background-color: #085c54;
+}

@@ -121,7 +121,7 @@ def get_holiday_calendar(holiday, company):
         'holiday_name': holiday.name,
         'holiday_date': holiday.date,
         'event_id': company.event_id,
-        'event_dscription': company.event_dscription
+        'event_dscription': company.event_description
     }
 
     return holiday_data
@@ -131,8 +131,8 @@ def get_holiday_calendar(holiday, company):
 def create_event():
     event = request.json
     new_event = Holidaycalendar(
-        event_id = event.get('company_event_id'),
-        event_description = event.get('company_event_description')
+        event_id = event.get('company_event_id'), 
+        event_description = event.get('company_event_description') # team buiding event, # End of year Event, #Quartely meeting
     )
 
     db.session.add(new_event)
@@ -164,8 +164,8 @@ def get_all_holidays():
     data = Holidaycalendar.query.all()
     data = {
         'holiday_id': data.holiday_id,
-        'holiday_name': data.holiday_name,
-        'holiday_date': data.holiday_date
+        'holiday_name': data.holiday_name, #Mashujaa day, new year, labor day, Christmas
+        'holiday_date': data.holiday_date #[January, May, June, October, December]
     }
 
     return jsonify(data)

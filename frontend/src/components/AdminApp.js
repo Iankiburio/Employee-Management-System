@@ -21,14 +21,14 @@ function AdminApp() {
           <AdminNavbar />
           <Section>
           <Routes>
-            <Route path="/" element={<AdminDashboard />} />
-            <Route path="/leave-type" element={LeaveType} />
-            <Route path="/department" element={Department} />
-            <Route path="/employees" element={Employees} />
-            <Route path="/salary" element={Salary} />
-            <Route path="/leave-requests" element={LeaveRequests} />
-            <Route path="/report" element={Report} />
-            <Route path="/logout" element={Logout} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="leave-type" element={LeaveType} />
+            <Route path="department" element={Department} />
+            <Route path="employees" element={Employees} />
+            <Route path="salary" element={Salary} />
+            <Route path="leave-requests" element={LeaveRequests} />
+            <Route path="report" element={Report} />
+            <Route path="logout" element={Logout} />
           </Routes>
           </Section>
           </div>

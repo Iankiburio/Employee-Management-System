@@ -7,11 +7,7 @@ function AdminDashboard() {
     <Section>
         {
             <div>
-        <p> Is this thing working</p>
-        <p> Is this thing working</p>
-        <p> Is this thing working</p>
-        <p> Is this thing working</p>
-        <p> Is this thing working</p>
+        <p> The Admin dashboard</p>
         </div> }
     </Section>
   );

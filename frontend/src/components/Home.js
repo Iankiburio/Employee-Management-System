@@ -11,8 +11,8 @@ function Home(){
             <img src="https://thumbs.dreamstime.com/b/rainbow-paper-human-figures-white-table-lgbt-concept-rainbow-paper-human-figures-white-table-lgbt-concept-151328020.jpg" />
             <h1 className='title'>Employee Management System</h1>
             <div className='buttons'>
-                <Link to="/admin-role" className='admin-button'>Admin</Link>
-                <Link to="/login/employee" className='employee-button'>Employee</Link>
+                <Link to="/admin-login" className='admin-button'>Admin</Link>
+                <Link to="/employee-login" className='employee-button'>Employee</Link>
                 </div>
                 </div>
         </div>

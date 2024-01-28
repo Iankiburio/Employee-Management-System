@@ -5,9 +5,9 @@ import '../css/navbar.css'
 function Navbar(){
 
     return(
-        <div className='navbar'>
+        <nav className='navbar'>
             This is navbar
-        </div>
+        </nav>
     );
 }
 

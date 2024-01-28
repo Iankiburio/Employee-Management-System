@@ -1,0 +1,11 @@
+.section {
+        width: 85%;
+        background-color: #d5a5a5;
+        padding: 20px;
+        box-sizing: border-box;
+        height: 100%;
+        float: right;
+        height: 100vh;
+
+        font: 100;
+}

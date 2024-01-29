@@ -4,7 +4,10 @@ import Section from './Section';
 function LeaveRequests() {
   return (
     <Section>
-      {/* Content specific to the leave requests */}
+        {
+            <div>
+        <p> The Admin leave requests</p>
+        </div> }
     </Section>
   );
 }

@@ -28,7 +28,9 @@ function EmployeeLogIn() {
             <input type="text" id="username" value={username} onChange={handleUsernameChange} />
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" value={password} onChange={handlePasswordChange} />
-            <button onClick={handleLogin}>Log in</button>
+            {/* <button onClick={handleLogin}>Log in</button> */}
+            <Link to="/employee/dashboard">Log In</Link>
+
             
         </div>
         </div>

@@ -4,7 +4,10 @@ import Section from './Section';
 function Report() {
   return (
     <Section>
-      {/* Content specific to the Admin Dashboard */}
+        {
+            <div>
+        <p> The Admin report</p>
+        </div> }
     </Section>
   );
 }

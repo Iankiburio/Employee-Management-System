@@ -4,7 +4,10 @@ import Section from './Section';
 function Employees() {
   return (
     <Section>
-      {/* Content specific to the Employees */}
+        {
+            <div>
+        <p> The Admin employees</p>
+        </div> }
     </Section>
   );
 }

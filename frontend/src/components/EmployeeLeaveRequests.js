@@ -1,15 +1,16 @@
 import React from 'react';
 import Section from './Section';
+import '../css/admindashboard.css'
 
-function EmployeeDashboard() {
+function EmployeeleaveRequests() {
   return (
     <Section>
         {
             <div>
-        <p> The Employee dashboard</p>
+        <p> The employee leave requests</p>
         </div> }
     </Section>
   );
 }
 
-export default EmployeeDashboard;
+export default EmployeeleaveRequests;

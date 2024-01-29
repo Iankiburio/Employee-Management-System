@@ -1,10 +1,14 @@
 import React from 'react';
 import Section from './Section';
+import '../css/admindashboard.css'
 
 function Department() {
   return (
     <Section>
-      {/* Content specific to the Department */}
+        {
+            <div>
+        <p> The Admin departments</p>
+        </div> }
     </Section>
   );
 }

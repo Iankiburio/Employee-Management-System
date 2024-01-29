@@ -2,15 +2,17 @@ import Header from './Header';
 import AdminNavbar from './AdminNavbar';
 import React from 'react';
 import AdminDashboard from './AdminDashboard'
-import LeaveType from './LeaveType'
-import Department from './Department'
-import Employees from './Employees'
-import Salary from './Salary'
-import LeaveRequests from './LeaveRequests'
-import Report from './Report'
+import LeaveType from './AdminLeaveType'
+import Department from './AdminDepartment'
+import AdminNotifications from './AdminNotifications'
+import Employees from './AdminEmployees'
+import Salary from './AdminSalary'
+import LeaveRequests from './AdminLeaveRequests'
+import Report from './AdminReport'
 import Logout from './LogOut'
 import {Route, Routes} from 'react-router-dom';
 import Section from './Section';
+import '../css/adminapp.css'
 
 
 function AdminApp() {
@@ -22,13 +24,14 @@ function AdminApp() {
           <Section>
           <Routes>
             <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="leave-type" element={LeaveType} />
-            <Route path="department" element={Department} />
-            <Route path="employees" element={Employees} />
-            <Route path="salary" element={Salary} />
-            <Route path="leave-requests" element={LeaveRequests} />
-            <Route path="report" element={Report} />
-            <Route path="logout" element={Logout} />
+            <Route path="leave-type" element={<LeaveType />} />
+            <Route path="departments" element={<Department />} />
+            <Route path="employees" element={<Employees />} />
+            <Route path="salary" element={<Salary />} />
+            <Route path="leave-requests" element={<LeaveRequests />} />
+            <Route path="report" element={<Report />} />
+            <Route path="logout" element={<Logout />} />
+            <Route path="notifications" element={<AdminNotifications />} />
           </Routes>
           </Section>
           </div>

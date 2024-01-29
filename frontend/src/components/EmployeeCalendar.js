@@ -1,15 +1,15 @@
 import React from 'react';
 import Section from './Section';
 
-function EmployeeDashboard() {
+function EmployeeCalendar() {
   return (
     <Section>
         {
             <div>
-        <p> The Employee dashboard</p>
+        <p> The employee calendar</p>
         </div> }
     </Section>
   );
 }
 
-export default EmployeeDashboard;
+export default EmployeeCalendar;

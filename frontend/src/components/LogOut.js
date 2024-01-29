@@ -4,7 +4,10 @@ import Section from './Section';
 function LogOut() {
   return (
     <Section>
-      {/* Content specific to the Log Out */}
+        {
+            <div>
+        <p> Log out</p>
+        </div> }
     </Section>
   );
 }

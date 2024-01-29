@@ -4,7 +4,10 @@ import Section from './Section';
 function LeaveType() {
   return (
     <Section>
-      {/* Content specific to the leave type */}
+        {
+            <div>
+        <p> The Admin leave type</p>
+        </div> }
     </Section>
   );
 }

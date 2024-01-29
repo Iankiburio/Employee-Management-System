@@ -27,6 +27,9 @@ function EmployeeNavbar() {
               <Link to="/employee/communication" className="nav-link active">HR communication</Link>
             </li>
             <li className="nav-item">
+              <Link to="/employee/notifications" className="nav-link active">Notifications</Link>
+            </li>
+            <li className="nav-item">
               <Link to="/admin/logout" className="nav-link active">Log out</Link>
             </li>
           </ul>

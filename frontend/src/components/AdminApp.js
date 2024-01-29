@@ -4,6 +4,7 @@ import React from 'react';
 import AdminDashboard from './AdminDashboard'
 import LeaveType from './AdminLeaveType'
 import Department from './AdminDepartment'
+import AdminNotifications from './AdminNotifications'
 import Employees from './AdminEmployees'
 import Salary from './AdminSalary'
 import LeaveRequests from './AdminLeaveRequests'
@@ -30,6 +31,7 @@ function AdminApp() {
             <Route path="leave-requests" element={<LeaveRequests />} />
             <Route path="report" element={<Report />} />
             <Route path="logout" element={<Logout />} />
+            <Route path="notifications" element={<AdminNotifications />} />
           </Routes>
           </Section>
           </div>

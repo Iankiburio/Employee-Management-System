@@ -7,6 +7,7 @@ import EmployeeSalary from './EmployeeSalary'
 import EmployeeCalendar from './EmployeeCalendar'
 import EmployeeCommunication from './EmployeeCommunication'
 import EmployeeLeaveRequests from './EmployeeLeaveRequests'
+import EmployeeNotifications from './EmployeeNotifications'
 import Logout from './LogOut'
 import {Route, Routes} from 'react-router-dom';
 import Section from './Section';
@@ -21,11 +22,11 @@ function EmployeeApp() {
           <Section>
           <Routes>
             <Route path="dashboard" element={<EmployeeDashboard />} />
-            <Route path="leave-type" element={<EmployeeProfile />} />
             <Route path="my-profile" element={<EmployeeProfile />} />
-            <Route path="department" element={<EmployeeCalendar />} />
+            <Route path="calendar" element={<EmployeeCalendar />} />
             <Route path="salary" element={<EmployeeSalary />} />
             <Route path="communication" element={<EmployeeCommunication />} />
+            <Route path="notifications" element={<EmployeeNotifications />} />
             <Route path="leave-requests" element={<EmployeeLeaveRequests />} />
             <Route path="logout" element={Logout} />
           </Routes>

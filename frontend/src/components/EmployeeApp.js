@@ -28,6 +28,7 @@ function EmployeeApp() {
             <Route path="communication" element={<EmployeeCommunication />} />
             <Route path="notifications" element={<EmployeeNotifications />} />
             <Route path="leave-requests" element={<EmployeeLeaveRequests />} />
+            <Route path="leave-requests/add" element={<LeaveRequestForm />} />
             <Route path="logout" element={Logout} />
           </Routes>
         </Section>

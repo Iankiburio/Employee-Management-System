@@ -1,5 +1,5 @@
-import React from "react";
-import Section from "./Section";
+// LeaveType.js
+import React from 'react';
 
 const LeaveType = ({ type, onSelect }) => {
   return (

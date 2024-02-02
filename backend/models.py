@@ -53,7 +53,10 @@ class Holidaycalendar(db.Model):
     holiday_date = db.Column(db.Date,nullable=False)
     holiday_name = db.Column(db.String,nullable=False)
     company_eventID = db.Column(db.Interger,primary_key=True)
-    company_event_description = db.Column(db.String,nullable=False)
+    company_event_title = db.Column(db.String,nullable=False)
+    company_event_start = db.Column(db.Date, default=None)
+    company_event_end = db.Column(db.Date, default=None)
+
 
 
 class Attendance(db.Model):
@@ -66,8 +69,10 @@ class Attendance(db.Model):
 class Notification(db.Model):
     id = db.Column(db.Interger,primary_key=True)
     admin_ID = db.Column(db.Interger,db.ForeignKey('admin.id'),nullable=True)
+    employee_name = db.Column(db.String(200),nullable=False)
+    employee_name = db.Column(db.String(200),nullable=False)
     employee_ID = db.Column(db.Interger,db.ForeignKey('employee.id'),nullable=True)
-    timestamp = db.Column(db.DateTime)
+    timestamp = db.Column(db.DateTime, default=None)
     action = db.Column(db.String,nullable=False)
 
 class Employee_Leaverequest(db.Model):

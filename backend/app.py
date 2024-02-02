@@ -49,7 +49,9 @@ def notifications():
         notification_data = request.get_json()
         new_notification = Notification(
             admin_id = notification_data['admin_id'],
+            admin_name = notification_data['admin_name'],
             employee_id = notification_data['employee_id'],
+            employee_name = notification_data['employee_name'],
             timestamp = notification_data['timestamp'],
             action = notification_data['action'],
         )
@@ -121,7 +123,9 @@ def get_holiday_calendar(holiday, company):
         'holiday_name': holiday.name,
         'holiday_date': holiday.date,
         'event_id': company.event_id,
-        'event_dscription': company.event_description
+        'event_title': company.event_title,
+        'event_start' : company.event_start,
+        'event_end' : company.event_end
     }
 
     return holiday_data
@@ -131,8 +135,10 @@ def get_holiday_calendar(holiday, company):
 def create_event():
     event = request.json
     new_event = Holidaycalendar(
-        event_id = event.get('company_event_id'), 
-        event_description = event.get('company_event_description') # team buiding event, # End of year Event, #Quartely meeting
+        event_id = event.get('company_event_id'),
+        event_title = event.get('title'),
+        event_start = event.get('start_date'),
+        event_end = event.get('end_date'),
     )
 
     db.session.add(new_event)

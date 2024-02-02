@@ -22,22 +22,22 @@ const EmployeeLeaveRequest = () => {
         <thead>
           <tr>
             <th>#Id</th>
+            <th>Leave Type</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Days</th>
+            <th>Applied Days</th>
             <th>Balance</th>
-            <th>Leave Type</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
+            <td>Maternity</td>
             <td>12/03/2032</td>
             <td>12/03/2032</td>
             <td>5</td>
             <td>10</td>
-            <td>Maternity</td>
             <td>
               <span
                 class="w3-yellow w3-text-black w3-round"

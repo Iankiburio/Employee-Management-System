@@ -1,13 +1,14 @@
 .header {
     background-color: #009688;
     color: #fff;
-    padding: 30px;
+    padding: 20px;
     text-align: center;
     z-index: 1000;
-    height: 15%;
+    height: 10%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    font-size: 24px;
   }
 
 .user-info {

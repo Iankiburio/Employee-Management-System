@@ -48,6 +48,7 @@ class Employee(db.Model, SerializerMixin):
         special_characters = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?"
         if not any(char in special_characters for char in password):
             raise ValueError('Password must contain at least one special character')
+        
 class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(200), nullable=False)

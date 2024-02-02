@@ -1,6 +1,6 @@
 import Header from './Header';
 import AdminNavbar from './AdminNavbar';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AdminDashboard from './AdminDashboard'
 import LeaveType from './AdminLeaveType'
 import Department from './AdminDepartment'
@@ -16,9 +16,28 @@ import '../css/adminapp.css'
 
 
 function AdminApp() {
+    
+  const [username, setUsername] = useState('');
+
+  const fetchData = () => {
+    return fetch('http://127.0.0.1:5000/users/1') 
+    .then((response) => response.json())
+    .then((data) => {
+      setUsername(data.user); 
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, []); 
+
+
     return (
         <div className="app">
-          <Header currentUser="User"/>
+          <Header currentUser={username}/>
           <div className ="container">
           <AdminNavbar />
           <Section>

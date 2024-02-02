@@ -1,10 +1,6 @@
 .section {
-        width: 85%;
-        background-color:#F5F5F5;
+        flex-grow: 1; /* Allow section to take remaining space */
         padding: 20px;
-        box-sizing: border-box;
-        float: right;
-        height: 100vh;
-
-        font: 100;
+        background-color: #f4f4f4;
+        overflow: auto; /* Add scrollbar if content overflows */
 }

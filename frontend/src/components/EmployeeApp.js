@@ -1,6 +1,6 @@
 import Header from './Header';
 import EmployeeNavbar from './EmployeeNavbar';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import EmployeeDashboard from './EmployeeDashboard'
 import EmployeeProfile from './EmployeeProfile'
 import EmployeeSalary from './EmployeeSalary'
@@ -14,9 +14,30 @@ import Section from './Section';
 
 
 function EmployeeApp() {
+
+  const [username, setUsername] = useState('');
+
+  const fetchData = () => {
+    return fetch('http://127.0.0.1:5000/users/1') 
+    .then((response) => response.json())
+    .then((data) => {
+      setUsername(data.user); 
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
+
+  useEffect(() => {
+    fetchData()
+  }, []); 
+
+
+
     return (
         <div className="app">
-          <Header currentUser="User"/>
+          <Header currentUser={username}/>
           <div className ="container">
           <EmployeeNavbar />
           <Section>

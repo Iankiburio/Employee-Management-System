@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from models import db,Employee_Leaverequest, Leavetype, Admin, Employee, User
 from flask_cors import CORS
-from flask_restful import Api, Resource
+from flask_restful import Api
 
 import datetime
 
@@ -21,7 +21,113 @@ db.init_app(app)
 
 api = Api(app)
 
+@app.route('/adminsignup', methods=['POST'])
+def adminsignup():
 
+    first_name = request.json['first_name']
+    last_name = request.json['last_name']
+    email = request.json['email']
+    password = request.json['password']
+    username = request.json['username']
+
+    if not request.is_json:
+        return make_response(jsonify({"msg": "Missing JSON in request"}), 400)
+    if 'username' not in request.json or 'last_name' not in request.json or 'first_name' not in request.json or'email' not in request.json or 'password' not in request.json:
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+    if username == '' or last_name =='' or first_name == '' or email == '' or password == '':
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+
+    if Admin.query.filter_by(username=username).first() and Admin.query.filter_by(first_name=first_name).first() and Admin.query.filter_by(last_name=last_name).first():
+        return make_response(jsonify({"msg": "User already exists"}), 400)
+
+    admin = Admin(username=username,email=email,password=password,first_name=first_name,last_name=last_name)
+    db.session.add(admin)
+    db.session.commit()
+    
+    return make_response(jsonify({"msg": "User created successfully"}), 201)
+
+
+@app.route('/adminlogin', methods=['POST'])
+def adminlogin():
+    if not request.is_json:
+        return make_response(jsonify({"msg": "Missing JSON in request"}), 400)
+    if 'first_name' not in request.json or 'last_name' not in request.json or 'password' not in request.json:
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+
+    first_name = request.json['first_name']
+    last_name = request.json['last_name']
+    password = request.json['password']
+
+    if last_name is None or first_name is None or  password is None:
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+
+    admin = Admin.query.filter_by(first_name=first_name, last_name=last_name ,password=password).first()
+
+    if not admin:
+        return make_response(jsonify({"msg": "Invalid username or password"}), 401)
+
+    return make_response(jsonify({"msg": "Login successful"}), 200)
+
+@app.route('/employeesignup', methods=['POST'])
+def employeesignup():
+    if not request.is_json:
+        return make_response(jsonify({"msg": "Missing JSON in request"}), 400)
+    if 'username' not in request.json or 'email' not in request.json or 'password' not in request.json:
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+
+    username = request.json['username']
+    email = request.json['email']
+    password = request.json['password']
+    first_name = request.json['first_name']
+    last_name = request.json['last_name']
+    department = request.json['department']
+    role = request.json['role']
+    bank_account = request.json['bank_account']
+    gender = request.json['gender']
+    joining_date = request.json['joining_date']
+    birth_date = request.json['birth_date']
+    contact = request.json['contact']
+
+    if first_name is None or last_name is None or email is None or password is None:
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+
+    if Employee.query.filter_by(username=username).first() or Admin.query.filter_by(email=email).first():
+        return make_response(jsonify({"msg": "User already exists"}), 400)
+
+    employee = Employee(username=username, 
+                  email=email, 
+                  password=password,
+                  first_name=first_name,
+                  last_name=last_name,contact=contact,
+                  department=department,role=role,bank_account=bank_account,
+                  gender=gender,joining_date=joining_date,birth_date=birth_date
+                  )
+    db.session.add(employee)
+    db.session.commit()
+
+    return make_response(jsonify({"msg": "User created successfully"}), 201)
+
+
+@app.route('/employeelogin', methods=['POST'])
+def employeelogin():
+    if not request.is_json:
+        return make_response(jsonify({"msg": "Missing JSON in request"}), 400)
+    if 'first_name' not in request.json or 'last_name' not in request.json or 'password' not in request.json:
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+
+    first_name = request.json['first_name']
+    last_name = request.json['last_name']
+    password = request.json['password']
+
+    if last_name is None or first_name is None or  password is None:
+        return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
+
+    employee = Employee.query.filter_by(first_name=first_name, last_name=last_name, password=password).first()
+
+    if not employee:
+        return make_response(jsonify({"msg": "Invalid username or password"}), 401)
+
+    return make_response(jsonify({"msg": "Login successful"}), 200)
 
 # Admin routes
 @app.route('/admins', methods=['GET'])
@@ -124,6 +230,20 @@ def update_employee(employee_id):
 
 
 # User routes
+
+@app.route('/users', methods=['POST'])
+def create_user():
+    data = request.get_json()
+    try:
+        #data['joining_date'] = datetime.datetime.strptime(data['joining_date'], "%Y-%m-%d").date()
+        #data['birth_date'] = datetime.datetime.strptime(data['birth_date'], "%Y-%m-%d").date()
+        user = User(**data)
+        db.session.add(user)
+        db.session.commit()
+        return make_response(jsonify({'message': 'User created successfully'}), 201)
+    except ValueError as e:
+        return make_response(jsonify({'error': str(e)}), 400)
+
 @app.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get(user_id)

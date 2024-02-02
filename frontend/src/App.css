@@ -14,11 +14,3 @@
 }
 
 
-.pages {
-  width: 85%;
-  float: right;
-  flex: 1;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-}

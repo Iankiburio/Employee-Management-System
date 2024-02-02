@@ -17,8 +17,5 @@
     width: 15%;
     background-color: #222D32;
     padding: 20px;
-    box-sizing: border-box;
-    position: fixed;
-    height: 100%;
-    float: left;
+
   }

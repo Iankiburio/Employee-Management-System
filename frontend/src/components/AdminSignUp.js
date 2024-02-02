@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import '../css/login.css';
 import Background from './Background';
 
-function AdminSignUp() {
+function AdminSignUp({onAdminSignup}) {
     const [username, setUsername] = useState('');
-    const [firstname, setfirstname] = useState('');
-    const [lastname, setlastname] = useState('');
+    const [first_name, setfirstname] = useState('');
+    const [last_name, setlastname] = useState('');
     const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -28,11 +28,25 @@ function AdminSignUp() {
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
+
     };
 
-    const handleSignUp = () => {
-        // Handle sign-up logic here, e.g., send data to a server
+    const handleSignUp = (e) => {
+        e.preventDefault();
+
+    const user = {
+        username,
+        first_name,
+        last_name,
+        password,
+        email,
+      };
+
+    onAdminSignup(user);
+
     };
+
+
 
     return (
       <div className='login'>
@@ -42,11 +56,11 @@ function AdminSignUp() {
             <label htmlFor="username">Username:</label>
             <input type="text" id="username" value={username} onChange={handleUsernameChange} />
             <label htmlFor="username">First Name:</label>
-            <input type="text" id="firstname" value={firstname} onChange={handleFirstnameChange} />
+            <input type="text" id="firstname" value={first_name} onChange={handleFirstnameChange} />
             <label htmlFor="username">Last Name:</label>
-            <input type="text" id="email" value={email} onChange={handleemailChange} />
+            <input type="text" id="email" value={last_name} onChange={handleLastnameChange} />
             <label htmlFor="password">Email:</label>
-            <input type="text" id="lastname" value={lastname} onChange={handleLastnameChange} />
+            <input type="text" id="lastname" value={email} onChange={handleemailChange} />
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" value={password} onChange={handlePasswordChange} />
             <button onClick={handleSignUp}>Sign up</button>

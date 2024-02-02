@@ -60,11 +60,11 @@ const LeaveRequestForm = ({ onSubmit }) => {
                 Choose your option
               </option>
               <option value="1">Annual Leave</option>
-              <option value="3">Study Leave</option>
-              <option value="2">Sick Leave</option>
-              <option value="3">Maternity</option>
-              <option value="4">Paternity</option>
-              <option value="5">Vacation</option>
+              <option value="2">Study Leave</option>
+              <option value="3">Sick Leave</option>
+              <option value="4">Maternity</option>
+              <option value="5">Paternity</option>
+              <option value="6">Vacation</option>
             </select>
           </div>
           <div className="w3-third">

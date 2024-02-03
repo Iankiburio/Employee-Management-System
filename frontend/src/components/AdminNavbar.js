@@ -12,9 +12,6 @@ function AdminNavbar() {
               <Link to="/admin/dashboard" className="nav-link active">Dashboard</Link>
             </li>
             <li className="nav-item">
-              <Link to="/admin/departments" className="nav-link active">Departments</Link>
-            </li>
-            <li className="nav-item">
               <Link to="/admin/leave-type" className="nav-link active">Leave Type</Link>
             </li>
             <li className="nav-item">

@@ -62,7 +62,7 @@ function App() {
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           // Handle successful login here, e.g., update state, redirect, etc.
-          // window.location.href = '/employee/dashboard';
+          window.location.href = '/employee/dashboard';
         } else {
           // Handle login error here, e.g., show an error message
         }

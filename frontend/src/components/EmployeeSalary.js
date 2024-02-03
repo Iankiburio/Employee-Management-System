@@ -7,7 +7,9 @@ function EmployeeSalary() {
         {
             <div>
         <p> The employee salary</p>
-        </div> }
+        </div> 
+        
+        }
     </Section>
   );
 }

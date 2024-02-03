@@ -22,6 +22,9 @@ function AdminNavbar() {
               <Link to="/admin/leave-type" className="nav-link active">
                 Leave Type
               </Link>
+              <Link to="/admin/leave-type" className="nav-link active">
+                Leave Type
+              </Link>
             </li>
             <li className="nav-item">
               <Link to="/admin/leave-requests" className="nav-link active">

@@ -62,7 +62,7 @@ function App() {
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           // Handle successful login here, e.g., update state, redirect, etc.
-          window.location.href = '/employee/dashboard';
+          window.location.href = "/employee/dashboard";
         } else {
           // Handle login error here, e.g., show an error message
         }
@@ -220,7 +220,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/employee/*" element={<EmployeeApp />} />
-        <Route path="/admin-login" element={<AdminLogIn />} />
+        <Route
+          path="/admin-login"
+          element={<AdminLogIn onAdminLogin={handleAdminLogin} />}
+        />
         <Route path="/admin-signup" element={<AdminSignUp />} />
         <Route
           path="/employee-login"

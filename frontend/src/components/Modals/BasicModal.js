@@ -1,13 +1,15 @@
 function BasicModal(props) {
   const { children, showModal, setShowModal, mh, mf } = props;
 
-  if (showModal === false) {
-    return null;
-  }
+  console.log(showModal);
 
   return (
-    <div className="w3-modal">
-      <div className="w3-modal-content w3-card-4">
+    <div
+      id="id01"
+      className="w3-modal"
+      style={{ display: showModal ? "block" : "none" }}
+    >
+      <div className="w3-modal-content w3-card-4" style={{ top: "20%" }}>
         <header className="w3-container w3-teal">
           <span
             onClick={() => setShowModal(false)}
@@ -15,7 +17,7 @@ function BasicModal(props) {
           >
             &times;
           </span>
-          <h2>{mh}</h2>
+          <h2 style={{ padding: "16px" }}>{mh}</h2>
         </header>
         <div className="w3-container">{children}</div>
         <footer className="w3-container w3-teal">

@@ -67,56 +67,71 @@ const LeaveRequests = () => {
               <span
                 className=" "
                 style={{ color: "black", fontSize: "18px", cursor: "pointer" }}
-                onClick={toggleDetails}
+                onClick={() => setShowDetails(true)}
               >
                 <FaEye />
               </span>
-              {showDetails && (
-                <div>
-                  <div>
-                    <strong>Details:</strong>
-                    <ul>
-                      <li>
-                        <strong>#Id:</strong> 1
-                      </li>
-                      <li>
-                        <strong>Leave Type:</strong> Annual Leave
-                      </li>
-                      <li>
-                        <strong>Start Date:</strong> 12/03/2032
-                      </li>
-                      <li>
-                        <strong>End Date:</strong> 12/03/2032
-                      </li>
-                      <li>
-                        <strong>Applied Days:</strong> 5
-                      </li>
-                      <li>
-                        <strong>Balance:</strong> 10
-                      </li>
-                      <li>
-                        <strong>Status:</strong> {status}
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <button onClick={handleApprove}>Approve</button>
-                    <button onClick={handleReject}>Reject</button>
-                  </div>
-                  <div>
-                    <textarea
-                      placeholder="Add comment..."
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    />
-                  </div>
-                </div>
-              )}
             </td>
             <td>{comment}</td>
           </tr>
         </tbody>
       </table>
+      <div className=" w3-container">
+        <BasicModal
+          mh="Employee Leave Request"
+          mf="Update employee leave request"
+          showModal={showDetails}
+          setShowModal={setShowDetails}
+        >
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <div>
+              <div>
+                <strong>Details:</strong>
+                <ul>
+                  <li>
+                    <strong>#Id:</strong> 1
+                  </li>
+                  <li>
+                    <strong>Leave Type:</strong> Annual Leave
+                  </li>
+                  <li>
+                    <strong>Start Date:</strong> 12/03/2032
+                  </li>
+                  <li>
+                    <strong>End Date:</strong> 12/03/2032
+                  </li>
+                  <li>
+                    <strong>Applied Days:</strong> 5
+                  </li>
+                  <li>
+                    <strong>Balance:</strong> 10
+                  </li>
+                  <li>
+                    <strong>Status:</strong> {status}
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <button className="w3-teal" onClick={handleApprove}>
+                  Approve
+                </button>
+                <button className="w3-red" onClick={handleReject}>
+                  Reject
+                </button>
+              </div>
+              <div>
+                <textarea
+                  placeholder="Add comment..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+        </BasicModal>
+      </div>
     </div>
   );
 };

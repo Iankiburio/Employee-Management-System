@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const EmployeeLeaveRequest = () => {
   const navigate = useNavigate();
+
+  //updated employee leave request
+
   return (
     <div style={{ width: "100%" }}>
       <div

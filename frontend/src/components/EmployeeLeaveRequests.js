@@ -18,7 +18,7 @@ const EmployeeLeaveRequest = () => {
         </button>
       </div>
 
-      <table class="w3-table-all" style={{ marginTop: "20px" }}>
+      <table className="w3-table-all" style={{ marginTop: "20px" }}>
         <thead>
           <tr>
             <th>#Id</th>
@@ -40,7 +40,7 @@ const EmployeeLeaveRequest = () => {
             <td>10</td>
             <td>
               <span
-                class="w3-yellow w3-text-black w3-round"
+                className="w3-yellow w3-text-black w3-round"
                 style={{ padding: "5px" }}
               >
                 pending

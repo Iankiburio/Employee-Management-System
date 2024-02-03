@@ -222,7 +222,10 @@ function App() {
         <Route path="/employee/*" element={<EmployeeApp />} />
         <Route path="/admin-login" element={<AdminLogIn />} />
         <Route path="/admin-signup" element={<AdminSignUp />} />
-        <Route path="/employee-login" element={<EmployeeLogIn />} />
+        <Route
+          path="/employee-login"
+          element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />}
+        />
         <Route path="/leave-requests" element={<LeaveRequestForm />} />
       </Routes>
     </Router>

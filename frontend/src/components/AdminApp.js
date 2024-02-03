@@ -13,7 +13,6 @@ import Logout from "./LogOut";
 import { Route, Routes } from "react-router-dom";
 import Section from "./Section";
 import "../css/adminapp.css";
-
 function AdminApp() {
   const [username, setUsername] = useState("");
 

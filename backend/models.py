@@ -1,3 +1,4 @@
+# models.py
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -5,13 +6,13 @@ db = SQLAlchemy()
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    payroll = db.relationship('Payroll', back_populates='employee', uselist=False)
+    payrolls = db.relationship('Payroll', back_populates='employee')
     attendances = db.relationship('Attendance', back_populates='employee', lazy=True)
 
 class Payroll(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
-    employee = db.relationship('Employee', back_populates='payroll')
+    employee = db.relationship('Employee', back_populates='payrolls')
     month = db.Column(db.Integer, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     base_salary = db.Column(db.Float, default=0)

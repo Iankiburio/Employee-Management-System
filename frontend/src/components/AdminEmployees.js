@@ -46,10 +46,9 @@ function Employees() {
       });
   };
   
-useEffect(()=>{
+  useEffect(()=>{
     fetchEmployees()
   },[]);
-  
 
   const openForm = () => {
     setIsFormVisible(true);
@@ -65,7 +64,8 @@ useEffect(()=>{
         {
           <div>
       <h1>Employees</h1>
-      <button className='button' onClick={openForm}>Create Employee</button>
+      <div className='center-button'>
+      <button className='button' onClick={openForm}>Create Employee</button></div>
       <div className="employee-list">
         {employees.map((employee, index) => (
           <EmployeeCard key={index} employee={employee} />

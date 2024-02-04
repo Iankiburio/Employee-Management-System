@@ -136,7 +136,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
 
 
           <div className="form-group">
-            <label htmlFor="gender">Gender:</label>
+            <label htmlFor="gender">Profile picture url:</label>
             <input
               type="text"
               id="gender"

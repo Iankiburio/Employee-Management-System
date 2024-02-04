@@ -24,7 +24,13 @@
     border-radius: 3px;
     padding: 10px 20px;
     cursor: pointer;
-    margin-left: 45.7%;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.center-button{
+    display: flex;
+    justify-content: center;
 }
 
 .employee-form-modal {
@@ -51,7 +57,7 @@ h1 {
     text-align: center;
     line-height: 30px;
     height: 60px;
-    font-size: 40px;
+    font-size: 60px;
   }
 
 .left {

@@ -8,13 +8,13 @@
 .login-container,
 .signup-container {
     position: absolute;
-    top: 28%; /* Adjust to match the height of the top grey band */
+    top: 28%;
     z-index: 1;
-    background-color: #FFFFFF; /* White background */
+    background-color: #FFFFFF;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     width: 500px;
-    margin: 0 auto; /* Center the form horizontally */
+    margin: 0 auto;
     text-align: center;
     border-radius: 5px;
 }
@@ -35,7 +35,7 @@
 
 .login-container input,
 .signup-container input {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;

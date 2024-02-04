@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import '../css/login.css';
 import Background from './Background';
 
@@ -58,9 +57,9 @@ function AdminSignUp({onAdminSignup}) {
             <label htmlFor="username">First Name:</label>
             <input type="text" id="firstname" value={first_name} onChange={handleFirstnameChange} />
             <label htmlFor="username">Last Name:</label>
-            <input type="text" id="email" value={last_name} onChange={handleLastnameChange} />
+            <input type="text" id="lastname" value={last_name} onChange={handleLastnameChange} />
             <label htmlFor="password">Email:</label>
-            <input type="text" id="lastname" value={email} onChange={handleemailChange} />
+            <input type="text" id="email" value={email} onChange={handleemailChange} />
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" value={password} onChange={handlePasswordChange} />
             <button onClick={handleSignUp}>Sign up</button>

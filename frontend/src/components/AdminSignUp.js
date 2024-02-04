@@ -52,6 +52,7 @@ function AdminSignUp({onAdminSignup}) {
         <Background/>
         <div className="signup-container">
             <h2>Sign up | Admin</h2>
+            <div>
             <label htmlFor="username">Username:</label>
             <input type="text" id="username" value={username} onChange={handleUsernameChange} />
             <label htmlFor="username">First Name:</label>
@@ -62,6 +63,7 @@ function AdminSignUp({onAdminSignup}) {
             <input type="text" id="email" value={email} onChange={handleemailChange} />
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+            </div>
             <button onClick={handleSignUp}>Sign up</button>
         </div>
         </div>

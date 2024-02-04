@@ -42,15 +42,16 @@ function AdminLogIn({ onAdminLogin }) {
         <Background/>
         <div className="signup-container">
             <h2>Log in | Admin</h2>
+            <div>
             <label htmlFor="username">First name:</label>
             <input type="text" id="username" value={first_name} onChange={handleFirstnameChange} />
             <label htmlFor="username">Last name:</label>
             <input type="text" id="username" value={last_name} onChange={handleLastnameChange} />
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+            </div>
             <button onClick={handleLogin}>Log in</button>
-            <Link to="/admin-signup">Sign Up</Link>
-            
+            <Link to="/admin-signup">Sign Up</Link>    
         </div>
         </div>
     );

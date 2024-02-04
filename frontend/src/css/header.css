@@ -8,9 +8,19 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    font-size: 30px;
   }
 
 .user-info {
     margin-left: auto; /* Pushes user info to the right */
+    font-size: 50px;
+    font-style: italic;
+  }
+
+  .logo {
+    padding-left: 60px;
+    margin-right: auto; /* Pushes user info to the right */
+    font-size: 80px;
+    font-style: oblique;
+    font-family:fantasy;
+
   }

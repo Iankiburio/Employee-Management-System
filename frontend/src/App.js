@@ -188,7 +188,7 @@ function App() {
       },
       body: JSON.stringify({
         user: user.first_name,
-        password: user.password,
+        password: user.id,
       }),
     })
       .then((res) => {
@@ -220,13 +220,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/employee/*" element={<EmployeeApp />} />
-        <Route path="/admin-login" element={<AdminLogIn />} />
-        <Route path="/admin-signup" element={<AdminSignUp />} />
-        <Route
-          path="/employee-login"
-          element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />}
-        />
-        <Route path="/leave-requests" element={<LeaveRequestForm />} />
+        <Route path="/admin-login" element={<AdminLogIn onAdminLogin={handleAdminLogin} />} />
+        <Route path="/admin-signup" element={<AdminSignUp onAdminSignup={handleAdminSignup}/>} />
+        <Route path="/employee-login" element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />} />
       </Routes>
     </Router>
   );

@@ -66,8 +66,8 @@ function EmployeeProfile({currentUser}) {
   return (
     <Section>
         {
-            <div>
-        <p> The Employee profile</p>
+            <div className='profile'>
+        <p style={{ textAlign: 'center', fontSize: '30px', margin: '0 auto' }}> Employee profile</p>
         <button className='button' onClick={openForm}>Modify Employee</button>
         <div className="employee-list">
         {user.map((employee, index) => (

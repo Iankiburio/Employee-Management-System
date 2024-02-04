@@ -8,12 +8,12 @@
     width: 100vh;
     margin-left:25%;
     margin-top: 10%;
-
 }
 
 .items{
     padding: 50px;
     background-color: rgb(243, 246, 246);
+    width: 100vh;
 }
 
 img {

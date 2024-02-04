@@ -1,21 +1,26 @@
 // EmployeeForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/employeeform.css';
 
-const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
+const EmployeeProfileForm = ({user, onModify, onCloseForm }) => {
+
+  const currentUser = user[0] ;
+
   const [employeeData, setEmployeeData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    department: '',
-    role: '',
-    bank_account: '',
-    gender: '',
-    joining_date: '',
-    birth_date: '',
-    contact: '',
+    first_name: currentUser.first_name,
+    last_name: currentUser.last_name,
+    email: currentUser.email,
+    password:currentUser.password,
+    department:currentUser.department,
+    role:currentUser.role,
+    bank_account: currentUser.bank_account,
+    gender:currentUser.gender,
+    joining_date: currentUser.joining_date,
+    birth_date: currentUser.birth_date,
+    contact: currentUser.contact,
   });
+
+ let m = String(user.first_name)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,22 +29,8 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onCreateEmployee(employeeData);
-    onCloseForm(); // Close the form modal
+    onModify(employeeData);
     // Reset the form fields if needed
-    setEmployeeData({
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      department: '',
-      role: '',
-      bank_account: '',
-      gender: '',
-      joining_date: '',
-      birth_date: '',
-      contact: '',
-    });
   };
 
   return (
@@ -57,6 +48,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.first_name}
               onChange={handleChange}
               required
+              placeholder= {m}
             />
           </div>
 
@@ -69,6 +61,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.last_name}
               onChange={handleChange}
               required
+              placeholder={employeeData.last_name}
             />
           </div>
 
@@ -81,18 +74,20 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.email}
               onChange={handleChange}
               required
+              placeholder={employeeData.email}
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Password:</label>
             <input
-              type="password"
+              type="text"
               id="password"
               name="password"
               value={employeeData.password}
               onChange={handleChange}
               required
+              placeholder={employeeData.password}
             />
           </div>
 
@@ -105,6 +100,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.department}
               onChange={handleChange}
               required
+              placeholder={employeeData.department}
             />
           </div>
 
@@ -117,6 +113,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.role}
               onChange={handleChange}
               required
+              placeholder={employeeData.role}
             />
           </div>
           </div>
@@ -131,12 +128,13 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.bank_account}
               onChange={handleChange}
               required
+              placeholder={employeeData.bank_account}
             />
           </div>
 
 
           <div className="form-group">
-            <label htmlFor="gender">Gender:</label>
+            <label htmlFor="gender">Picture url:</label>
             <input
               type="text"
               id="gender"
@@ -144,6 +142,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.gender}
               onChange={handleChange}
               required
+              placeholder={employeeData.gender}
             />
           </div>
 
@@ -156,6 +155,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.joining_date}
               onChange={handleChange}
               required
+              placeholder={employeeData.joining_date}
             />
           </div>
 
@@ -168,6 +168,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.birth_date}
               onChange={handleChange}
               required
+              placeholder={employeeData.birth_date}
             />
           </div>
 
@@ -180,6 +181,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
               value={employeeData.contact}
               onChange={handleChange}
               required
+              placeholder={employeeData.contact}
             />
           </div>
 
@@ -193,4 +195,4 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
   );
 };
 
-export default EmployeeForm;
+export default EmployeeProfileForm;

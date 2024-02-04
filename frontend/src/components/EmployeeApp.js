@@ -43,7 +43,7 @@ function EmployeeApp() {
           <Section>
           <Routes>
             <Route path="dashboard" element={<EmployeeDashboard />} />
-            <Route path="my-profile" element={<EmployeeProfile />} />
+            <Route path="my-profile" element={<EmployeeProfile currentUser={username}/>} />
             <Route path="calendar" element={<EmployeeCalendar />} />
             <Route path="salary" element={<EmployeeSalary />} />
             <Route path="communication" element={<EmployeeCommunication />} />

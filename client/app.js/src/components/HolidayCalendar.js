@@ -8,7 +8,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
 //add locales - of the country your calendar will be based on
 const locales = {
   "en-US": require("date-fns/locale/en-US"), // we have used english as the language and US as the country

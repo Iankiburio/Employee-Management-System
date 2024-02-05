@@ -1,12 +1,13 @@
-// LeaveRequestForm.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useHistory from react-router-dom
 import Section from "./Section";
-import LeaveType from "./LeaveType";
+import EmployeeLeaveBalances from "./EmployeeLeaveBalances";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../css/leaveRequestForm.css";
 
-const LeaveRequestForm = ({ onSubmit }) => {
+const LeaveRequestForm = () => {
+  const navigate = useNavigate(); // Get the history object
   const [selectedType, setSelectedType] = useState("");
   const [startDate, setStartDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -22,7 +23,7 @@ const LeaveRequestForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(selectedType, startDate, endDate);
+    //onSubmit(selectedType, startDate, endDate);
   };
 
   const calculateDifference = () => {
@@ -45,9 +46,15 @@ const LeaveRequestForm = ({ onSubmit }) => {
     calculateDifference();
   };
 
+  const handleBack = () => {
+    navigate(-1); // Redirect to the leave requests page
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className=" " style={{ backgroundColor: "white", padding: "10px" }}>
+        <h2>Leave Application </h2>
+
         <div className="w3-row-padding w3-margin-bottom">
           <div className="w3-third">
             <label>Leave Type</label>
@@ -118,7 +125,17 @@ const LeaveRequestForm = ({ onSubmit }) => {
           }}
           className=" w3-margin-top"
         >
-          <button type="submit" className="w3-button w3-teal w3-rounded">
+          <button
+            onClick={handleBack}
+            className="w3-button w3-blue w3-rounded w3-margin-right w3-margin"
+          >
+            Back
+          </button>
+
+          <button
+            type="submit"
+            className="w3-button w3-teal w3-rounded w3-margin"
+          >
             Submit
           </button>
         </div>

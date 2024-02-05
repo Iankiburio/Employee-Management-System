@@ -31,6 +31,7 @@ const LeaveRequests = () => {
 
   return (
     <div>
+      <h2>Leave Requests</h2>
       <table className="w3-table-all" style={{ marginTop: "20px" }}>
         <thead>
           <tr>

@@ -20,7 +20,7 @@ const EmployeeLeaveRequest = () => {
           New Leave Request
         </button>
       </div>
-
+      <h2>Leave Application History</h2>
       <table className="w3-table-all" style={{ marginTop: "20px" }}>
         <thead>
           <tr>
@@ -28,6 +28,7 @@ const EmployeeLeaveRequest = () => {
             <th>Leave Type</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Return Date</th>
             <th>Applied Days</th>
             <th>Balance</th>
             <th>Status</th>
@@ -36,9 +37,10 @@ const EmployeeLeaveRequest = () => {
         <tbody>
           <tr>
             <td>1</td>
-            <td>Maternity</td>
-            <td>12/03/2032</td>
-            <td>12/03/2032</td>
+            <td>Annual Leave</td>
+            <td>12/03/2024</td>
+            <td>12/07/2024</td>
+            <td>12/08/2024</td>
             <td>5</td>
             <td>10</td>
             <td>

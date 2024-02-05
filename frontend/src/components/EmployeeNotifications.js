@@ -1,15 +1,18 @@
 import React from 'react';
-import Section from './Section';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function EmployeeNotifications() {
+function EmployeeNotification() {
+  const notification = () => toast("Your leave request has been sent.");
+
   return (
-    <Section>
-        {
-            <div>
-        <p> The Employee notifications</p>
-        </div> }
-    </Section>
+    <div>
+      <button onClick={notification}>Notifications</button>
+      <ToastContainer />
+    </div>
   );
-}
+};
 
-export default EmployeeNotifications;
+
+
+export default EmployeeNotification;

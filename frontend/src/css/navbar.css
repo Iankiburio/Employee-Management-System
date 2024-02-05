@@ -1,0 +1,33 @@
+/* Style links in the navbar */
+.navbar a {
+    display: block;
+    padding: 30px;
+    color: #fff;
+    text-decoration: none;
+    font-size:30px;
+  }
+  
+  /* Style active link 
+.navbar a.active {
+    background-color: #777;
+  }
+*/
+
+.navbar {
+    width: 15%;
+    background-color: #222D32;
+    padding: 20px;
+  }
+
+  /* Add this CSS to your styles to remove list-style-type */
+  ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 20px;
+  }
+
+/* Optional: Add some styling to your navbar items */
+li {
+  margin-right: 10px; /* Adjust as needed for spacing between items */
+  padding: 20px;
+}

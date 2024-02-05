@@ -1,0 +1,34 @@
+
+/* Create the background with color bands */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.top-grey {
+    background-color: #E6E6E6; /* Grey color for the top band */
+    height: 9%; /* 5% of the total height */
+}
+
+.green {
+    background-color: #009688; /* Green color for the middle band */
+    height: 25%; /* 25% of the total height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
+    font-style: italic;
+}
+
+.ems {
+    align-items: center;
+}
+
+.bottom-grey {
+    background-color: #E6E6E6; /* Grey color for the bottom band */
+    height: 66%; /* The rest of the height (100% - 5% - 25%) */
+}
+

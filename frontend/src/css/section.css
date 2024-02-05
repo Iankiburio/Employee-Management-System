@@ -1,0 +1,6 @@
+.section {
+        flex-grow: 1; /* Allow section to take remaining space */
+        padding: 20px;
+        background-color: #f4f4f4;
+        overflow: auto; /* Add scrollbar if content overflows */
+}

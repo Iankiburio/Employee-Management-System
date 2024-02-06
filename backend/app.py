@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from models import db,Employee_Leaverequest, Leavetype, Admin, Employee, User
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_restful import Api
 
 import datetime
@@ -337,6 +337,194 @@ def admin_get_all_employees():
     employee_names = [{'employee_id': employee.id, 'employee_name': f'{employee.first_name} {employee.last_name}'} for employee in employees]
 
     return jsonify({'employee_names': employee_names})
+
+
+# Function to calculate dynamic values for salary, deductions, bonuses, and taxes
+def calculate_salary_components(base_salary, deductions_percentage, bonuses_percentage, tax_percentage):
+    deductions = base_salary * deductions_percentage
+    bonuses = base_salary * bonuses_percentage
+    tax = base_salary * tax_percentage
+
+    # Calculate gross pay
+    gross_pay = base_salary + bonuses
+
+    # Calculate net salary
+    net_salary = gross_pay - deductions - tax
+
+    return deductions, bonuses, tax, gross_pay, net_salary
+
+# Function to calculate salary components for a payroll entry
+def calculate_salary(payroll):
+    base_salary = payroll.base_salary
+    deductions_percentage = payroll.deductions_percentage
+    bonuses_percentage = payroll.bonuses_percentage
+    tax_percentage = payroll.tax_percentage
+
+    deductions, bonuses, tax, gross_pay, net_salary = calculate_salary_components(
+        base_salary, deductions_percentage, bonuses_percentage, tax_percentage
+    )
+
+    # Update payroll entry
+    payroll.deductions = deductions
+    payroll.bonuses = bonuses
+    payroll.tax = tax
+    payroll.gross_pay = gross_pay
+    payroll.net_salary = net_salary
+
+# Function to generate salary slip for a payroll entry
+def generate_salary_slip(payroll):
+    return {
+        'employee_id': payroll.employee.id,
+        'name': payroll.employee.name,
+        'base_salary': payroll.base_salary,
+        'bonuses': payroll.bonuses,
+        'gross_pay': payroll.gross_pay,
+        'deductions': payroll.deductions,
+        'net_salary': payroll.net_salary
+    }
+
+# Function to process monthly payroll for an employee
+def process_monthly_payroll_employee(employee):
+    # Retrieve the latest payroll entry for the employee
+    payroll = next((p for p in employee.payrolls if p.month == datetime.now().month and p.year == datetime.now().year), None)
+
+    if payroll:
+        # Calculate salary components
+        calculate_salary(payroll)
+
+        # Commit changes to the database
+        db.session.commit()
+
+        # Generate salary slip
+        salary_slip = generate_salary_slip(payroll)
+
+        return {'message': f'Monthly payroll processed successfully for employee {employee.id}',
+                'salary_slip': salary_slip}
+    else:
+        return {'error': 'Payroll entry not found'}
+
+# Function to process monthly payroll for all employees
+def process_monthly_payroll_all_employees():
+    employees = Employee.query.all()
+    salary_slips = []
+
+    for employee in employees:
+        result = process_monthly_payroll_employee(employee)
+        if 'error' in result:
+            return result  
+
+        salary_slips.append(result['salary_slip'])
+
+    return {'message': 'Monthly payroll processed successfully for all employees', 'salary_slips': salary_slips}
+
+
+# Endpoint for the admin to process monthly payroll for a specific employee
+@app.route('/admin/process_monthly_payroll/<employee_id>', methods=['POST', 'GET'])
+@cross_origin(supports_credentials=True)
+def admin_process_monthly_payroll_employee(employee_id):
+    if request.method == 'POST':
+        # Process payroll for a specific employee
+        employee = Employee.query.get(employee_id)
+        
+        if employee:
+            # Retrieve the latest payroll entry for the employee
+            payroll = next((p for p in employee.payrolls if p.month == datetime.now().month and p.year == datetime.now().year), None)
+
+            if payroll:
+                calculate_salary(payroll)
+                db.session.commit()
+
+                # Generate salary slip
+                salary_slip = generate_salary_slip(payroll)
+
+                return jsonify({'message': f'Monthly payroll processed successfully for employee {employee_id}',
+                                'salary_slip': salary_slip})
+            else:
+                return jsonify({'error': 'Payroll entry not found'})
+        else:
+            return jsonify({'error': 'Employee not found'})
+
+    elif request.method == 'GET':
+        # Retrieve all data for a specific employee
+        employee = Employee.query.get(employee_id)
+
+        if employee:
+            # Retrieve the latest payroll entry for the employee
+            payroll = next((p for p in employee.payrolls if p.month == datetime.now().month and p.year == datetime.now().year), None)
+        
+            if payroll:
+                calculate_salary(payroll)
+                # Generate salary slip
+                salary_slip = generate_salary_slip(payroll)
+
+                # Include all relevant data in the response
+                employee_data = {
+                    'employee_id': employee.id,
+                    'name': employee.name,
+                    'payroll_data': salary_slip
+                }
+
+                return jsonify({'employee_data': employee_data})
+            else:
+                return jsonify({'error': 'Payroll entry not found'})
+        else:
+            return jsonify({'error': 'Employee not found'})
+    else:
+        return jsonify({'error': 'Method not allowed'})
+    
+
+# Endpoint for updating payroll with CORS handling
+@app.route('/admin/update_payroll/<employee_id>', methods=['OPTIONS', 'POST'])
+@cross_origin(supports_credentials=True)
+# ... (previous code)
+
+def admin_update_payroll(employee_id):
+    if request.method == 'OPTIONS':
+        return jsonify({'message': 'Preflight request received'}), 200
+
+    if request.method == 'POST':
+        # Get the payroll data from the request
+        payroll_data = request.get_json()
+
+        # Retrieve the employee
+        employee = Employee.query.get(employee_id)
+
+        if employee:
+            # Retrieve the latest payroll entry for the employee
+            payroll = next((p for p in employee.payrolls if p.month == datetime.now().month and p.year == datetime.now().year), None)
+
+            if payroll:
+                # Update the payroll based on the received data
+                payroll.base_salary = payroll_data.get('base_salary', payroll.base_salary)
+                payroll.deductions = payroll_data.get('deductions', payroll.deductions)
+                payroll.bonuses = payroll_data.get('bonuses', payroll.bonuses)
+                payroll.tax_percentage = payroll_data.get('tax_percentage', payroll.tax_percentage)
+
+                # Commit changes to the database
+                db.session.commit()
+
+                # Generate and return updated salary slip
+                updated_salary_slip = generate_salary_slip(payroll)  # Assuming this function updates the slip in place
+
+                # Convert the payroll object to a dictionary
+                payroll_dict = {
+                    'base_salary': payroll.base_salary,
+                    'deductions': payroll.deductions,
+                    'bonuses': payroll.bonuses,
+                    'tax_percentage': payroll.tax_percentage,
+                    # Add other attributes as needed
+                }
+
+                return jsonify({'message': f'Payroll updated successfully for employee {employee_id}',
+                                'updated_salary_slip': updated_salary_slip,
+                                'payroll': payroll_dict})
+            else:
+                return jsonify({'error': 'Payroll entry not found'})
+        else:
+            return jsonify({'error': 'Employee not found'})
+    else:
+        return jsonify({'error': 'Method not allowed'}), 405
+
 
 
 if __name__ == '__main__':

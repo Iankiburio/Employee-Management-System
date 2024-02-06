@@ -13,6 +13,7 @@ import Logout from "./LogOut";
 import { Route, Routes } from "react-router-dom";
 import Section from "./Section";
 import "../css/adminapp.css";
+import EmployeeCommunication from "./EmployeeCommunication";
 function AdminApp() {
   const [username, setUsername] = useState("");
 
@@ -47,6 +48,7 @@ function AdminApp() {
             <Route path="report" element={<Report />} />
             <Route path="logout" element={<Logout />} />
             <Route path="notifications" element={<AdminNotifications />} />
+            <Route path="communication" element={<EmployeeCommunication />} />
           </Routes>
         </Section>
       </div>

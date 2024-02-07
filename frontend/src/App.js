@@ -62,6 +62,8 @@ function App() {
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           // Handle successful login here, e.g., update state, redirect, etc.
+          // It cant work.
+          // Store the employee in state variable.
           window.location.href = "/employee/dashboard";
         } else {
           // Handle login error here, e.g., show an error message

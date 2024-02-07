@@ -1,5 +1,5 @@
 // LeaveRequestList.js
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/leaveRequestList.css";
 
 const LeaveRequestList = ({ requests, onApprove, onReject }) => {

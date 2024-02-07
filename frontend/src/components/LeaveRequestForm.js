@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useHistory from react-router-dom
+import { useNavigate } from "react-router-dom";
 import Section from "./Section";
+import EmployeeLeaveRequests from "./EmployeeLeaveRequests";
 import EmployeeLeaveBalances from "./EmployeeLeaveBalances";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../css/leaveRequestForm.css";
 
 const LeaveRequestForm = () => {
-  const navigate = useNavigate(); // Get the history object
+  const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
   const [startDate, setStartDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -16,6 +17,11 @@ const LeaveRequestForm = () => {
     new Date().toISOString().split("T")[0]
   );
   const [difference, setDifference] = useState(null);
+  const [returnDate, setReturnDate] = useState("");
+
+  console.log("selectedType", selectedType);
+  console.log("startDate", startDate);
+  console.log("endDate", endDate);
 
   const handleTypeSelect = (e) => {
     setSelectedType(e.target.value);
@@ -42,12 +48,68 @@ const LeaveRequestForm = () => {
   };
 
   const handleEndDateChange = (event) => {
-    setEndDate(event.target.value);
-    calculateDifference();
+    const selectedEndDate = new Date(event.target.value);
+    setEndDate(selectedEndDate.toISOString().split("T")[0]);
+
+    // Calculate return date based on end date
+    let returnDate = new Date(selectedEndDate);
+
+    // Check if end date is between Monday and Thursday
+    if (returnDate.getDay() >= 1 && returnDate.getDay() <= 4) {
+      // If between Monday and Thursday, add one day to the end date
+      returnDate.setDate(selectedEndDate.getDate() + 1);
+    } else if (returnDate.getDay() === 5) {
+      // Friday
+      // If it's Friday, set return date to the next Monday
+      returnDate.setDate(selectedEndDate.getDate() + 3); // Add 3 days to skip Saturday and Sunday
+    } else {
+      // If not between Monday and Thursday, find the next weekday
+      while (returnDate.getDay() === 0 || returnDate.getDay() === 6) {
+        returnDate.setDate(returnDate.getDate() + 1);
+      }
+    }
+
+    const formattedReturnDate = returnDate.toISOString().split("T")[0]; // Format as yyyy-mm-dd
+
+    setReturnDate(formattedReturnDate);
   };
 
   const handleBack = () => {
-    navigate(-1); // Redirect to the leave requests page
+    navigate(-1);
+  };
+
+  const submitLeaveRequest = () => {
+    // validation front end.
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      leavetype_ID: selectedType,
+      start_date: startDate,
+      end_date: endDate,
+      status: "Pending",
+      admin_comment: "",
+      action: "Approve",
+      Return_date: returnDate,
+      leave_balances: "20",
+      employee_ID: 3,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://127.0.0.1:5000/leave-requests", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        navigate("/employee/leave-requests");
+      })
+      .catch((error) => console.log("error", error));
   };
 
   return (
@@ -96,17 +158,17 @@ const LeaveRequestForm = () => {
           </div>
         </div>
         <div className="w3-row-padding">
-          <div className=" w3-third">
+          <div className="w3-third">
             <label>Return Date</label>
             <input
               className="w3-input w3-border"
               type="date"
               placeholder="Return Date"
-              value={difference !== null ? difference : ""}
+              value={returnDate}
               disabled
             />
           </div>
-          <div className=" w3-third">
+          <div className="w3-third">
             <label>Leave Balances</label>
             <input
               className="w3-input w3-border"
@@ -115,7 +177,7 @@ const LeaveRequestForm = () => {
               disabled
             />
           </div>
-          <div className=" w3-third"></div>
+          <div className="w3-third"></div>
         </div>
         <div
           style={{
@@ -123,7 +185,7 @@ const LeaveRequestForm = () => {
             justifyContent: "center",
             alignItems: "center",
           }}
-          className=" w3-margin-top"
+          className="w3-margin-top"
         >
           <button
             onClick={handleBack}
@@ -135,6 +197,7 @@ const LeaveRequestForm = () => {
           <button
             type="submit"
             className="w3-button w3-teal w3-rounded w3-margin"
+            onClick={submitLeaveRequest}
           >
             Submit
           </button>

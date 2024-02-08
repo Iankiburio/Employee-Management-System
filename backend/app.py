@@ -66,7 +66,7 @@ def adminlogin():
     if not admin:
         return make_response(jsonify({"msg": "Invalid username or password"}), 401)
 
-    return make_response(jsonify({"msg": "Login successful"}), 200)
+    return make_response(jsonify({"msg": "Login successful","role":"Admin","id":admin.id}), 200)
 
 @app.route('/employeesignup', methods=['POST'])
 def employeesignup():
@@ -127,7 +127,7 @@ def employeelogin():
     if not employee:
         return make_response(jsonify({"msg": "Invalid username or password"}), 401)
 
-    return make_response(jsonify({"msg": "Login successful"}), 200)
+    return make_response(jsonify({"msg": "Login successful","role":"Employee","id":employee.id}), 200)
 
 # Admin routes
 @app.route('/admins', methods=['GET'])
@@ -269,23 +269,45 @@ def update_user(user_id):
 # Route to get all leave requests
 @app.route('/leave-requests', methods=['GET'])
 def get_leave_requests():
-    leave_requests = Employee_Leaverequest.query.all()
-    leave_requests_data = []
-    for request in leave_requests:
-        leave_requests_data.append({
-            'id': request.id,
-            'leavetype_ID': request.leavetype_ID,
-            'start_date': str(request.start_date),
-            'end_date': str(request.end_date),
-            'status': request.status,
-            'admin_comment': request.admin_comment,
-            'action': request.action,
-            'Return_date': str(request.Return_date),
-            'leave_balances': request.leave_balances,
-            'employee_ID': request.employee_ID
-        })
-    return jsonify({'leave_requests': leave_requests_data})
-
+    all_data = []
+    leave_requests = db.session.query(Employee_Leaverequest, Employee, Leavetype).join(Employee).join(Leavetype).all()
+    for leave_request, employee, leave_type in leave_requests:
+        employee_data = {
+            'id': employee.id,
+            'first_name': employee.first_name,
+            'last_name': employee.last_name,
+            'email': employee.email,
+            'department': employee.department,
+            'role': employee.role,
+            'bank_account': employee.bank_account,
+            'gender': employee.gender,
+            'joining_date': leave_request.start_date.strftime('%Y-%m-%d'),
+            'birth_date': employee.birth_date,
+            'contact': employee.contact
+        }
+        
+        leave_type_data = {
+            'id': leave_type.id,
+            'leave_description': leave_type.leave_description,
+            'leave_days': leave_type.leave_days,
+            'gender': leave_type.gender,
+            'leave_balances': leave_type.leave_balances
+        }
+        
+        leave_request_data = {
+            'id': leave_request.id,
+            'employee': employee_data,
+            'leave_type': leave_type_data,
+            'start_date': leave_request.start_date.strftime('%Y-%m-%d'),
+            'end_date': leave_request.end_date.strftime('%Y-%m-%d'),
+            'status': leave_request.status,
+            'admin_comment': leave_request.admin_comment,
+            'action': leave_request.action,
+            'return_date': leave_request.Return_date.strftime('%Y-%m-%d'),
+            'leave_balances': leave_request.leave_balances
+        }
+        all_data.append(leave_request_data)
+    return jsonify(all_data)
 
 # Route to create a new leave request
 @app.route('/leave-requests', methods=['POST'])
@@ -311,6 +333,31 @@ def create_leave_request():
     return jsonify({'message': 'Leave request created successfully'})
 
 
+@app.route("/leave-request/update",methods=["PUT"])
+def update_leave_request():
+   # Extract id, status, and admin_comment from the request body
+    data = request.json
+    request_id = data.get('id')
+    status = data.get('status')
+    admin_comment = data.get('admin_comment')
+
+    # Ensure the id is provided in the request body
+    if request_id is None:
+        return jsonify({'error': 'ID is required in the request body'}), 400
+
+    # Retrieve the leave request object from the database
+    leave_request = Employee_Leaverequest.query.get_or_404(request_id)
+
+    # Update the leave request object
+    if status is not None:
+        leave_request.status = status
+    if admin_comment is not None:
+        leave_request.admin_comment = admin_comment
+
+    # Commit the changes to the database
+    db.session.commit()
+
+    return jsonify({'message': 'Leave request updated successfully'}), 200
 # Route to get all leave types
 @app.route('/leave-types', methods=['GET'])
 def get_leave_types():

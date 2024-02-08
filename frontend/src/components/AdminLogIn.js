@@ -1,59 +1,97 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../css/login.css';
-import Background from './Background';
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import "../css/login.css";
+import Background from "./Background";
 
-function AdminLogIn({ onAdminLogin }) {
-    const [first_name, setFirstname] = useState('');
-    const [last_name, setLastname] = useState('');
-    const [password, setPassword] = useState('');
+import useaxios from "../hooks/useaxios";
 
-    const [status, setStatus] = useState(null);
-    const [msg, setMsg] = useState(null);
+import AppContext from "../Provider/AppContext";
 
-    const handleFirstnameChange = (e) => {
-        setFirstname(e.target.value);
-    };
+import { useNavigate } from "react-router-dom";
 
-    const handleLastnameChange = (e) => {
-        setLastname(e.target.value);
-    };
+function AdminLogIn() {
+  const [first_name, setFirstname] = useState("");
+  const [last_name, setLastname] = useState("");
+  const [password, setPassword] = useState("");
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+  const [status, setStatus] = useState(null);
+  const [msg, setMsg] = useState(null);
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+  const { setUser } = useContext(AppContext);
 
+  const navigate = useNavigate();
+  const request = useaxios();
+
+  const handleFirstnameChange = (e) => {
+    setFirstname(e.target.value);
+  };
+
+  const handleLastnameChange = (e) => {
+    setLastname(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
 
     const user = {
-          first_name,
-          last_name,
-          password,
-        };
-
-    onAdminLogin(user);
-
+      first_name,
+      last_name,
+      password,
     };
 
-    return (
-      <div className='login'>
-        <Background/>
-        <div className="signup-container">
-            <h2>Log in | Admin</h2>
-            <label htmlFor="username">First name:</label>
-            <input type="text" id="username" value={first_name} onChange={handleFirstnameChange} />
-            <label htmlFor="username">Last name:</label>
-            <input type="text" id="username" value={last_name} onChange={handleLastnameChange} />
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" value={password} onChange={handlePasswordChange} />
-            <button onClick={handleLogin}>Log in</button>
-            <Link to="/admin-signup">Sign Up</Link>
-            
-        </div>
-        </div>
-    );
+    userLogin(user);
+  };
+
+  async function userLogin(data) {
+    let res = await request({
+      method: "POST",
+      url: "adminlogin",
+      body: data,
+    });
+
+    if (res === "error") {
+      return;
+    }
+
+    setUser(res);
+    navigate("/admin/dashboard");
+  }
+
+  return (
+    <div className="login">
+      <Background />
+      <div className="signup-container">
+        <h2>Log in | Admin</h2>
+        <label htmlFor="username">First name:</label>
+        <input
+          type="text"
+          id="username"
+          value={first_name}
+          onChange={handleFirstnameChange}
+        />
+        <label htmlFor="username">Last name:</label>
+        <input
+          type="text"
+          id="username"
+          value={last_name}
+          onChange={handleLastnameChange}
+        />
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <button onClick={handleLogin}>Log in</button>
+        <Link to="/admin-signup">Sign Up</Link>
+      </div>
+    </div>
+  );
 }
 
 export default AdminLogIn;

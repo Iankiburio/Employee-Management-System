@@ -1,8 +1,6 @@
 function BasicModal(props) {
   const { children, showModal, setShowModal, mh, mf } = props;
 
-  console.log(showModal);
-
   return (
     <div
       id="id01"

@@ -26,8 +26,6 @@ const EmployeeLeaveRequest = () => {
       .catch((error) => console.log("error", error));
   }
 
-  console.log(data);
-
   function getDays(startDate, endDate) {
     let stDate = new Date(startDate);
     let enDate = new Date(endDate);

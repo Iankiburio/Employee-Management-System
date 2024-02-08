@@ -72,10 +72,9 @@ def adminlogin():
 def employeesignup():
     if not request.is_json:
         return make_response(jsonify({"msg": "Missing JSON in request"}), 400)
-    if 'username' not in request.json or 'email' not in request.json or 'password' not in request.json:
+    if  'last_name' not in request.json or'first_name' not in request.json or 'email' not in request.json or 'password' not in request.json:
         return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
 
-    username = request.json['username']
     email = request.json['email']
     password = request.json['password']
     first_name = request.json['first_name']
@@ -91,16 +90,21 @@ def employeesignup():
     if first_name is None or last_name is None or email is None or password is None:
         return make_response(jsonify({"msg": "Missing JSON data in request"}), 400)
 
-    if Employee.query.filter_by(username=username).first() or Admin.query.filter_by(email=email).first():
+    if Admin.query.filter_by(email=email).first():
         return make_response(jsonify({"msg": "User already exists"}), 400)
 
-    employee = Employee(username=username, 
+    employee = Employee(
                   email=email, 
                   password=password,
                   first_name=first_name,
-                  last_name=last_name,contact=contact,
-                  department=department,role=role,bank_account=bank_account,
-                  gender=gender,joining_date=joining_date,birth_date=birth_date
+                  last_name=last_name,
+                  contact=contact,
+                  department=department,
+                  role=role,
+                  bank_account=bank_account,
+                  gender=gender,
+                  joining_date=joining_date,
+                  birth_date=birth_date
                   )
     db.session.add(employee)
     db.session.commit()

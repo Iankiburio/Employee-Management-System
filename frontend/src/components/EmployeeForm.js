@@ -136,7 +136,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
 
 
           <div className="form-group">
-            <label htmlFor="gender">Gender:</label>
+            <label htmlFor="gender">Profile picture url:</label>
             <input
               type="text"
               id="gender"
@@ -183,11 +183,11 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
             />
           </div>
 
-          <button type="submit">Submit</button>
+          <button className='button-submit' type="submit">Submit</button>
 
           </div>
         </form>
-        <button onClick={onCloseForm}>Close</button>
+        <button className='button-delete' onClick={onCloseForm}>Close</button>
       </div>
     </div>
   );

@@ -14,16 +14,6 @@ function AdminNavbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/admin/departments" className="nav-link active">
-                Departments
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/admin/leave-Allocation" className="nav-link active">
-                Leave Allocation
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link to="/admin/leave-type" className="nav-link active">
                 Leave Type
               </Link>
@@ -52,6 +42,11 @@ function AdminNavbar() {
             <li className="nav-item">
               <Link to="/admin/notifications" className="nav-link active">
                 Notifications
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/admin/communication" className="nav-link active">
+                HR communication
               </Link>
             </li>
             <li className="nav-item">

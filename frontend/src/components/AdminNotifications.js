@@ -1,15 +1,18 @@
 import React from 'react';
-import Section from './Section';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function AdminNotifications() {
+
+
+function AdminNotification() {
+  const notification = () => toast("A new leave request has been received from Lucy.");
+
   return (
-    <Section>
-        {
-            <div>
-        <p> The Admin notifications</p>
-        </div> }
-    </Section>
+    <div>
+      <button onClick={notification}>Notifications</button>
+      <ToastContainer />
+    </div>
   );
-}
+};
 
-export default AdminNotifications;
+export default AdminNotification;

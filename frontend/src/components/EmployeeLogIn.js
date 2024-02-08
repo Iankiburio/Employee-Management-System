@@ -66,6 +66,7 @@ function EmployeeLogIn({}) {
       <Background />
       <div className="signup-container">
         <h2>Log in | Employee</h2>
+        <div>
         <label htmlFor="username">First name:</label>
         <input
           type="text"
@@ -87,6 +88,7 @@ function EmployeeLogIn({}) {
           value={password}
           onChange={handlePasswordChange}
         />
+        </div>
         <button onClick={handleLogin}>Log in</button>
       </div>
     </div>

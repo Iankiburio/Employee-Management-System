@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import '../css/login.css';
 import Background from './Background';
 
@@ -53,16 +52,18 @@ function AdminSignUp({onAdminSignup}) {
         <Background/>
         <div className="signup-container">
             <h2>Sign up | Admin</h2>
+            <div>
             <label htmlFor="username">Username:</label>
             <input type="text" id="username" value={username} onChange={handleUsernameChange} />
             <label htmlFor="username">First Name:</label>
             <input type="text" id="firstname" value={first_name} onChange={handleFirstnameChange} />
             <label htmlFor="username">Last Name:</label>
-            <input type="text" id="email" value={last_name} onChange={handleLastnameChange} />
+            <input type="text" id="lastname" value={last_name} onChange={handleLastnameChange} />
             <label htmlFor="password">Email:</label>
-            <input type="text" id="lastname" value={email} onChange={handleemailChange} />
+            <input type="text" id="email" value={email} onChange={handleemailChange} />
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+            </div>
             <button onClick={handleSignUp}>Sign up</button>
         </div>
         </div>

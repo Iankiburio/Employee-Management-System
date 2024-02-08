@@ -5,16 +5,16 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
+
   /* Top Section */
-  .top-section {
+.top-section {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 100px;
   }
   
-  .card {
-    flex-basis: calc(33.33% - 20px);
+.top-section > .card {
+    flex-basis: calc(20% - 0px);
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 8px;
@@ -22,62 +22,64 @@
     display: flex;
     align-items: center;
   }
-  
   .card i {
     font-size: 24px;
     margin-right: 10px;
   }
   
-  .card-content p {
+.card-content p {
     font-size: 14px;
     color: #777;
     margin-bottom: 5px;
   }
   
-  .card-content h2 {
+.card-content h2 {
     font-size: 24px;
     color: #333;
   }
   
   /* Middle Section */
-  .middle-section {
+.middle-section {
     text-align: center;
     margin-bottom: 20px;
   }
   
-  .middle-section h2 {
-    font-size: 20px;
+.middle-section h2 {
+    font-size: 30px;
     color: #333;
   }
   
-  .middle-section .line {
+.middle-section .line {
     border-top: 1px solid #ccc;
     margin: 10px auto;
     width: 50%;
   }
   
   /* Bottom Section */
-  .bottom-section {
+.bottom-section {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 60px;
+    margin-top: 60px;
   }
   
-  .card {
-    flex-basis: calc(25% - 20px);
+.bottom-section > .card {
+    flex-basis: calc(15% - 0px);
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  .card-content p {
-    font-size: 14px;
+.card-content p {
+    font-size: 30px;
     color: #777;
     margin-bottom: 5px;
+    margin-left: 10px;
   }
   
-  .card-content h2 {
-    font-size: 24px;
+.card-content h2 {
+    font-size: 40px;
     color: #333;
   }
   

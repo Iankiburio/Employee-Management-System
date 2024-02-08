@@ -1,3 +1,38 @@
+.button-delete {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.button-submit {
+    background-color: #007bff;
+    color: rgb(255, 255, 255);
+    border:#2b2a2a;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 75%;
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.center-button{
+    display: flex;
+    justify-content: center;
+}
+
 .employee-form-modal {
     position: fixed;
     top: 0;
@@ -12,42 +47,49 @@
 }
 
 h2 {
-  text-align: center; /* Center the text horizontally */
-  line-height: 10px; /* Adjust line-height to center vertically */
-  height: 40px; /* Set a fixed height to center vertically */
+  text-align: center;
+  line-height: 30px;
+  height: 60px;
+  font-size: 40px;
 }
+
+h1 {
+    text-align: center;
+    line-height: 30px;
+    height: 60px;
+    font-size: 60px;
+  }
 
 .left {
   margin-right: auto;
-  padding-left: 30px;
+  padding-left: 20px;
+  flex-basis: calc(50% - 10px); /* Adjust the width of each column */
 }
 
 .right {
   margin-left: auto;
-  flex-basis: calc(50% - 20px); /* Adjust the width of each column */
+  flex-basis: calc(50% - 10px); /* Adjust the width of each column */
 }
 
 #form {
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 25px;
+
 }
 
 .modal-content {
     background-color: rgb(226, 217, 217);
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
-    width: 800px; /* Adjust the width as needed */
+    width: 1200px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-  
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
 }
   
 .form-group {
     flex-basis: calc(50% - 10px); /* Adjust the width of each column */
-    padding: 10px;
+    padding: 20px;
 }
   
 label {
@@ -55,36 +97,18 @@ label {
     font-weight: bold;
 }
   
-.input-box {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #1b1b1b;
-    border-radius: 10px;
-    outline:#999; /* Remove the default blue outline */
-}
 
-.input-box:focus {
+input:focus {
     border-color: #999; /* Change the border color when focused */
 }
   
-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
 
-.input-box {
+input {
     width: 100%;
-    padding: 5px;
-    border: 1px solid #2b2a2a;
+    padding: 10px;
+    border: 1px solid #636161;
     border-radius: 3px;
-    background-color: white; /* Set the background color to white */
-    outline:#999;
+    background-color: white;
+    outline:#beb9b9;
 }
   
-.input-box:focus {
-    border-color: #999; /* Change the border color when focused */
-}

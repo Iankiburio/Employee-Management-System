@@ -3,10 +3,10 @@ import Section from "./Section";
 
 import { FaEye } from "react-icons/fa";
 
-const LeaveType = ({ type, onSelect }) => {
+const EmployeeLeaveBalances = ({ type, onSelect }) => {
   return (
     <div>
-      <h2>Leave Balances</h2>
+      <h2> My Leave Balances</h2>
       <table className="w3-table-all" style={{ marginTop: "20px" }}>
         <thead>
           <tr>
@@ -43,4 +43,4 @@ const LeaveType = ({ type, onSelect }) => {
   );
 };
 
-export default LeaveType;
+export default EmployeeLeaveBalances;

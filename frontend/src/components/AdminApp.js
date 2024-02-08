@@ -7,6 +7,7 @@ import Department from "./AdminDepartment";
 import AdminNotifications from "./AdminNotifications";
 import Employees from "./AdminEmployees";
 import Salary from "./AdminSalary";
+import LeaveAllocation from "./AdminLeaveAllocation";
 import LeaveRequests from "./AdminLeaveRequests";
 import Report from "./AdminReport";
 import Logout from "./LogOut";
@@ -44,6 +45,7 @@ function AdminApp() {
             <Route path="departments" element={<Department />} />
             <Route path="employees" element={<Employees />} />
             <Route path="salary" element={<Salary />} />
+            <Route path="leave-Allocation" element={<LeaveAllocation />} />
             <Route path="leave-requests" element={<LeaveRequests />} />
             <Route path="report" element={<Report />} />
             <Route path="logout" element={<Logout />} />

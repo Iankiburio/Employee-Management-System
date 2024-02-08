@@ -62,7 +62,9 @@ function App() {
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           // Handle successful login here, e.g., update state, redirect, etc.
-          window.location.href = '/employee/dashboard';
+          // It cant work.
+          // Store the employee in state variable.
+          window.location.href = "/employee/dashboard";
         } else {
           // Handle login error here, e.g., show an error message
         }
@@ -220,9 +222,28 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/employee/*" element={<EmployeeApp />} />
-        <Route path="/admin-login" element={<AdminLogIn onAdminLogin={handleAdminLogin} />} />
-        <Route path="/admin-signup" element={<AdminSignUp onAdminSignup={handleAdminSignup}/>} />
-        <Route path="/employee-login" element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />} />
+        {/* <Route
+          path="/admin-login"
+          element={<AdminLogIn onAdminLogin={handleAdminLogin} />}
+        /> */}
+        {/* <Route path="/admin-signup" element={<AdminSignUp />} /> */}
+        {/* <Route
+          path="/employee-login"
+          element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />}
+        /> */}
+        <Route path="/leave-requests" element={<LeaveRequestForm />} />
+        <Route
+          path="/admin-login"
+          element={<AdminLogIn onAdminLogin={handleAdminLogin} />}
+        />
+        <Route
+          path="/admin-signup"
+          element={<AdminSignUp onAdminSignup={handleAdminSignup} />}
+        />
+        <Route
+          path="/employee-login"
+          element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />}
+        />
       </Routes>
     </Router>
   );

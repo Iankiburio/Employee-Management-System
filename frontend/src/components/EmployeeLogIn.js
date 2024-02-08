@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "../css/login.css";
 import Background from "./Background";
 
-function EmployeeLogIn({ onEmployeeLogin }) {
+import AppContext from "../Provider/AppContext";
+
+import useaxios from "../hooks/useaxios";
+
+import { useNavigate } from "react-router-dom";
+
+function EmployeeLogIn({}) {
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
   const [password, setPassword] = useState("");
 
   const [status, setStatus] = useState(null);
   const [msg, setMsg] = useState(null);
+
+  const { setUser } = useContext(AppContext);
+
+  const navigate = useNavigate();
+  const request = useaxios();
 
   const handleFirstnameChange = (e) => {
     setFirstname(e.target.value);
@@ -32,8 +43,23 @@ function EmployeeLogIn({ onEmployeeLogin }) {
       password,
     };
 
-    onEmployeeLogin(user);
+    userLogin(user);
   };
+
+  async function userLogin(data) {
+    let res = await request({
+      method: "POST",
+      url: "adminlogin",
+      body: data,
+    });
+
+    if (res === "error") {
+      return;
+    }
+
+    setUser(res);
+    navigate("/employee/dashboard");
+  }
 
   return (
     <div className="login">

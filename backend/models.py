@@ -107,6 +107,8 @@ class Employee_Leaverequest(db.Model):
     leave_balances = db.Column(db.Float,nullable=True)
     employee_ID = db.Column(db.Integer,db.ForeignKey('employee.id'),nullable=True)
 
+    
+
 
 class Communication(db.Model):
     id = db.Column(db.Integer,primary_key=True)

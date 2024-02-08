@@ -6,6 +6,7 @@ import EmployeeProfile from "./EmployeeProfile";
 import EmployeeSalary from "./EmployeeSalary";
 import EmployeeCalendar from "./EmployeeCalendar";
 import EmployeeCommunication from "./EmployeeCommunication";
+import EmployeeLeaveBalances from "./EmployeeLeaveBalances";
 import EmployeeLeaveRequests from "./EmployeeLeaveRequests";
 import LeaveRequestForm from "./LeaveRequestForm";
 import EmployeeNotifications from "./EmployeeNotifications";
@@ -44,6 +45,7 @@ function EmployeeApp() {
             <Route path="salary" element={<EmployeeSalary />} />
             <Route path="communication" element={<EmployeeCommunication />} />
             <Route path="notifications" element={<EmployeeNotifications />} />
+            <Route path="Leave Balances" element={<EmployeeLeaveBalances />} />
             <Route path="leave-requests" element={<EmployeeLeaveRequests />} />
             <Route path="leave-requests/add" element={<LeaveRequestForm />} />
             <Route path="logout" element={Logout} />

@@ -45,7 +45,9 @@ function AdminNavbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/admin/communication" className="nav-link active">HR communication</Link>
+              <Link to="/admin/communication" className="nav-link active">
+                HR communication
+              </Link>
             </li>
             <li className="nav-item">
               <Link to="/admin/logout" className="nav-link active">

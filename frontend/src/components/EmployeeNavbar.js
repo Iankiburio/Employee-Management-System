@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import '../css/navbar.css';
+import React from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import "../css/navbar.css";
 
 function EmployeeNavbar() {
   return (
@@ -9,28 +9,49 @@ function EmployeeNavbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link to="/employee/dashboard" className="nav-link active">Dashboard</Link>
+              <Link to="/employee/dashboard" className="nav-link active">
+                Dashboard
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/employee/my-profile" className="nav-link active">My profile</Link>
+              <Link to="/employee/my-profile" className="nav-link active">
+                My profile
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/employee/leave-requests" className="nav-link active">Leave requests</Link>
+              <Link to="/employee/Leave Balances" className="nav-link active">
+                Leave Balances
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/employee/calendar" className="nav-link active">Calendar</Link>
+              <Link to="/employee/leave-requests" className="nav-link active">
+                Leave requests
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/employee/salary" className="nav-link active">Salary</Link>
+              <Link to="/employee/calendar" className="nav-link active">
+                Calendar
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/employee/communication" className="nav-link active">HR communication</Link>
+              <Link to="/employee/salary" className="nav-link active">
+                Salary
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/employee/notifications" className="nav-link active">Notifications</Link>
+              <Link to="/employee/communication" className="nav-link active">
+                HR communication
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/admin/logout" className="nav-link active">Log out</Link>
+              <Link to="/employee/notifications" className="nav-link active">
+                Notifications
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/admin/logout" className="nav-link active">
+                Log out
+              </Link>
             </li>
           </ul>
         </div>
@@ -40,4 +61,3 @@ function EmployeeNavbar() {
 }
 
 export default EmployeeNavbar;
-

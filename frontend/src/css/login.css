@@ -1,7 +1,9 @@
+
 .login {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
 }
 
 /* CSS for the form container */

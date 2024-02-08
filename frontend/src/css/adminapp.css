@@ -5,6 +5,7 @@
 }
 
 .container {
+    padding-top:40px;
     display: flex;
     flex-grow: 1; /* Allow content to grow to fill remaining space */
 }

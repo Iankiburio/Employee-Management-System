@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Section from './Section';
 import EmployeeProfileForm from './EmployeeProfileForm';
 import EmployeeCard from './EmployeeCard';
+import '../css/employeeform.css';
 
 function EmployeeProfile({currentUser}) {
 
@@ -67,8 +68,8 @@ function EmployeeProfile({currentUser}) {
     <Section>
         {
             <div className='profile'>
-        <p style={{ textAlign: 'center', fontSize: '30px', margin: '0 auto' }}> Employee profile</p>
-        <button className='button' onClick={openForm}>Modify Employee</button>
+        <p style={{ textAlign: 'center', fontSize: '50px', margin: '0 auto' }}> Employee profile</p>
+        <button className='button2' onClick={openForm}>Modify Employee</button>
         <div className="employee-list">
         {user.map((employee, index) => (
           <EmployeeCard key={index} employee={employee} />

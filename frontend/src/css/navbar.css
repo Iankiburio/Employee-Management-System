@@ -1,7 +1,7 @@
 /* Style links in the navbar */
 .navbar a {
     display: block;
-    padding: 30px;
+    padding: 10px;
     color: #fff;
     text-decoration: none;
     font-size:30px;
@@ -16,7 +16,8 @@
 .navbar {
     width: 15%;
     background-color: #222D32;
-    padding: 20px;
+    padding: 10px;
+    padding-top: 50px;
   }
 
   /* Add this CSS to your styles to remove list-style-type */

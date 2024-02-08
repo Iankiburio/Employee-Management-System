@@ -1,0 +1,76 @@
+.home {
+    display: flex;
+    background: white;
+    font-size: 30px;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    width: 100vh;
+    margin-left:25%;
+    margin-top: 9%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    margin:50px;
+    color: #000000;
+}
+
+.items{
+    padding: 50px;
+    background-color: rgb(243, 246, 246);
+    width: 100vh;
+}
+
+img {
+    width: 100%;
+    height: 500px;
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.admin-button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #000000;
+    background-color: #FFC107;
+    border: 1px solid #FFC107;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 40%;
+    font-size:40px;
+}
+
+.employee-button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #009688;
+    border: 1px solid #009688;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size:40px;
+
+}
+  
+.role-button:hover {
+    background-color: #0056b3;
+}
+  
+.admin-button:hover {
+    background-color: #8d6c08;
+}
+
+.employee-button:hover {
+    background-color: #085c54;
+}

@@ -5,6 +5,7 @@
     border-radius: 3px;
     padding: 10px 20px;
     cursor: pointer;
+    font-size: 30px;
 }
 
 .button-submit {
@@ -18,6 +19,28 @@
 }
 
 .button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.button-employee {
+    background-color:#009688;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.button2 {
     background-color: #007bff;
     color: white;
     border: none;

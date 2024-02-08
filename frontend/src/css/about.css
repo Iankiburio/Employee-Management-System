@@ -1,0 +1,13 @@
+.team{
+    height: 100%;
+}
+
+.about-cards{
+    display: flex;
+    margin: 50px;
+}
+
+.individual-card{
+    margin: 50px;
+}
+

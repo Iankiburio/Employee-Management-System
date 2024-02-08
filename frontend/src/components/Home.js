@@ -1,22 +1,67 @@
-import React from 'react'
+import React from 'react';
 import '../css/home.css'
-import { Link } from 'react-router-dom';
+import AboutApp from './About'; // Import your component files
+import DevelopersTeam from './Team';
+import LoginSection from './LoginSection';
 
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeSection: 'login'
+    };
+  }
 
-function Home(){
+  handleNavClick = (section) => {
+    this.setState({ activeSection: section }, () => {
+      // Scroll to the top of the section
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  };
 
-    return(
-        <div className='home'>
-            <div className='items'>
-            <img src="https://thumbs.dreamstime.com/b/rainbow-paper-human-figures-white-table-lgbt-concept-rainbow-paper-human-figures-white-table-lgbt-concept-151328020.jpg" />
-            <h1 className='title'>Employee Management System</h1>
-            <div className='buttons'>
-                <Link to="/admin-login" className='admin-button'>Admin</Link>
-                <Link to="/employee-login" className='employee-button'>Employee</Link>
-                </div>
-                </div>
+  render() {
+    const { activeSection } = this.state;
+
+    return (
+      <div className="App">
+        <div className='top'>
+         <div className="logo2">
+            AEMS
         </div>
+        <nav className='homenavbar'>
+          <ul>
+            <li className={activeSection === 'about-app' ? 'active' : ''}>
+              <button onClick={() => this.handleNavClick('about-app')}>
+                About App
+              </button>
+            </li>
+            <li className={activeSection === 'login' ? 'active' : ''}>
+              <button onClick={() => this.handleNavClick('login')}>
+                Admin and Employee Login
+              </button>            
+            <li className={activeSection === 'developers-team' ? 'active' : ''}>
+              <button onClick={() => this.handleNavClick('developers-team')}>
+                Developers Team
+              </button>
+            </li>
+
+            </li>
+          </ul>
+        </nav>
+        </div>
+
+        {/* Main Content */}
+        <div className="main-content">
+          <AboutApp />
+          <LoginSection />
+          <DevelopersTeam />
+        </div>
+      </div>
     );
+  }
 }
 
 export default Home;

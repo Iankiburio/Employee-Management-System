@@ -4,7 +4,7 @@ import '../css/employeeform.css';
 
 const EmployeeProfileForm = ({user, onModify, onCloseForm }) => {
 
-  const currentUser = user[0] ;
+  const currentUser = user?.[0] || {};
 
   const [employeeData, setEmployeeData] = useState({
     first_name: currentUser.first_name,
@@ -36,7 +36,7 @@ const EmployeeProfileForm = ({user, onModify, onCloseForm }) => {
   return (
     <div className="employee-form-modal">
       <div className="modal-content">
-        <h2>Create Employee</h2>
+        <h2>Modify Employee</h2>
         <form id='form' onSubmit={handleSubmit}>
         <div className="left">
           <div className="form-group">
@@ -99,7 +99,7 @@ const EmployeeProfileForm = ({user, onModify, onCloseForm }) => {
               name="department"
               value={employeeData.department}
               onChange={handleChange}
-              required
+              readOnly
               placeholder={employeeData.department}
             />
           </div>
@@ -112,7 +112,7 @@ const EmployeeProfileForm = ({user, onModify, onCloseForm }) => {
               name="role"
               value={employeeData.role}
               onChange={handleChange}
-              required
+              readOnly
               placeholder={employeeData.role}
             />
           </div>

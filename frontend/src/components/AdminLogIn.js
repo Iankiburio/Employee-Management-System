@@ -9,7 +9,7 @@ import AppContext from "../Provider/AppContext";
 
 import { useNavigate } from "react-router-dom";
 
-function AdminLogIn() {
+function AdminLogIn({ onAdminLogin }) {
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +34,7 @@ function AdminLogIn() {
     setPassword(e.target.value);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -43,7 +43,12 @@ function AdminLogIn() {
       password,
     };
 
-    userLogin(user);
+    const res = await userLogin(user);
+
+    if (res && res !== "error") {
+      onAdminLogin(user); // Calling the callback function
+      navigate("/admin/dashboard");
+    }
   };
 
   async function userLogin(data) {
@@ -54,11 +59,11 @@ function AdminLogIn() {
     });
 
     if (res === "error") {
-      return;
+      return res;
     }
 
     setUser(res);
-    navigate("/admin/dashboard");
+    return res;
   }
 
   return (
@@ -90,7 +95,7 @@ function AdminLogIn() {
         <div>
         <button onClick={handleLogin}>Log in</button>
         <Link to="/admin-signup">Sign Up</Link>
-      </div>
+        </div>
       </div>
     </div>
   );

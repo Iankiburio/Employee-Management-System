@@ -37,7 +37,7 @@ function EmployeeDashboard({currentUser}) {
       .then((response) => response.json())
       .then((data) => {
         console.log('API Response:', data);
-        setLeaveRequests(data.leave_requests);
+        setLeaveRequests(data);
       })
       .catch((error) => {
         console.error('Error fetching employees:', error);
@@ -50,13 +50,11 @@ function EmployeeDashboard({currentUser}) {
     fetchLeaveRequests()
   },[]);
 
-  let number = employees.length;
-  let leaves = leaveTypes.length;
 
-  let leaves_requests = (leaveRequests.filter(approved => approved.employee_ID===currentUser.id)).length;  
-  let approved = (leaveRequests.filter(approved => approved.action==='approve' && approved.employee_ID===currentUser.id)).length;  
-  let rejected = (leaveRequests.filter(rejected => rejected.action==='reject'&& rejected.employee_ID===currentUser.id)).length; 
-  let open = (leaveRequests.filter(rejected => rejected.status==='open'&& rejected.employee_ID===currentUser.id)).length; 
+  let leaves_requests = (leaveRequests.filter(approved => approved.first_name===currentUser)).length;  
+  let approved = (leaveRequests.filter(approved => approved.action==='approve' && approved.first_name===currentUser)).length;  
+  let rejected = (leaveRequests.filter(rejected => rejected.action==='reject'&& rejected.first_name===currentUser)).length; 
+  let open = (leaveRequests.filter(rejected => rejected.status==='open'&& rejected.first_name===currentUser)).length; 
 
   function countUniqueValuesByKey(employees, key) {
     const uniqueValues = new Set();

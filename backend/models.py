@@ -48,7 +48,7 @@ class Leavetype(db.Model):
     gender = db.Column(db.String,nullable=False)
     leave_balances = db.Column(db.Float,nullable=False)
 
-class Holidaycalendar(db.Model):
+class Calendar(db.Model):
     id = db.Column(db.Interger,primary_key=True)
     holiday_date = db.Column(db.Date,nullable=False)
     holiday_name = db.Column(db.String,nullable=False)

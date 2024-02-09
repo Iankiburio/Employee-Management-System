@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api, Resource
-from models import db, Holidaycalendar, Notification
+from models import db, Calendar, Notification
 
 app = Flask(__name__)
 CORS(app)
@@ -134,7 +134,7 @@ def get_holiday_calendar(holiday, company):
 @app.route('/events', methods=['POST'])
 def create_event():
     event = request.json
-    new_event = Holidaycalendar(
+    new_event = Calendar(
         event_id = event.get('company_event_id'),
         event_title = event.get('title'),
         event_start = event.get('start_date'),
@@ -148,16 +148,16 @@ def create_event():
         'success': True,
         'event': 'New event has been created'}), 201
 
-@app.route('events/<int:event_id>', methods=['GET'])
+@app.route('/events/<int:event_id>', methods=['GET'])
 def get_event(event_id):
-    event = Holidaycalendar.query.filter(event_id = event_id).all()
+    event = Calendar.query.filter(event_id = event_id).all()
     if event is None:
         return "No event created"
     return jsonify({"event": "We have a company event"}), 200
 
-@app.route('events', methods=['DELETE'])
+@app.route('/events', methods=['DELETE'])
 def delete(event_id):
-        company_event = Holidaycalendar.query.filter_by(event_id=event_id).all()
+        company_event = Calendar.query.filter_by(event_id=event_id).all()
 
         db.session.delete(company_event)
         db.session.commit()
@@ -167,7 +167,7 @@ def delete(event_id):
 #Holidays
 @app.route('/holidays', methods=['GET'])
 def get_all_holidays():
-    data = Holidaycalendar.query.all()
+    data = Calendar.query.all()
     data = {
         'holiday_id': data.holiday_id,
         'holiday_name': data.holiday_name, #Mashujaa day, new year, labor day, Christmas
@@ -176,9 +176,9 @@ def get_all_holidays():
 
     return jsonify(data)
 
-@app.route('holidays/<int:holiday_id>', methods=['GET'])
+@app.route('/holidays/<int:holiday_id>', methods=['GET'])
 def get_holiday(holiday_id):
-    holiday = Holidaycalendar.query.filter(holiday_id = holiday_id).all()
+    holiday = Calendar.query.filter(holiday_id = holiday_id).all()
     if holiday:
         return jsonify({'holiday': holiday})
     

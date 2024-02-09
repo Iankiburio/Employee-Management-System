@@ -7,6 +7,7 @@ import Department from "./AdminDepartment";
 import AdminNotifications from "./AdminNotifications";
 import Employees from "./AdminEmployees";
 import Salary from "./AdminSalary";
+import PayrollPage from "./PayrollPage";
 import LeaveAllocation from "./AdminLeaveAllocation";
 import LeaveRequests from "./AdminLeaveRequests";
 import Report from "./AdminReport";
@@ -43,8 +44,10 @@ function AdminApp() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="leave-type" element={<LeaveType />} />
             <Route path="departments" element={<Department />} />
-            <Route path="employees" element={<Employees />} />
             <Route path="salary" element={<Salary />} />
+            <Route path="employees" element={<Employees />} />
+            {/* Add the following route for the PayrollPage */}
+            <Route path="payroll/:employeeId" element={<PayrollPage />} />
             <Route path="leave-Allocation" element={<LeaveAllocation />} />
             <Route path="leave-requests" element={<LeaveRequests />} />
             <Route path="report" element={<Report />} />

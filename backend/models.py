@@ -1,8 +1,68 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 db = SQLAlchemy()
+
+        
+class Payroll(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+    employee = db.relationship('Employee', back_populates='payrolls')
+    month = db.Column(db.Integer, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    base_salary = db.Column(db.Float, default=0)
+    deductions_percentage = db.Column(db.Float, default=0.1)
+    bonuses_percentage = db.Column(db.Float, default=0.05)
+    tax_percentage = db.Column(db.Float, default=0.15)
+    deductions = db.Column(db.Float, default=0)
+    bonuses = db.Column(db.Float, default=0)
+    tax = db.Column(db.Float, default=0)
+    gross_pay = db.Column(db.Float, default=0)
+    net_salary = db.Column(db.Float, default=0)
+
+
+class Employee(db.Model, SerializerMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(200), nullable=False)
+    last_name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    department = db.Column(db.String(200), nullable=False)
+    payrolls = db.relationship('Payroll', back_populates='employee')
+    role = db.Column(db.String(200), nullable=False)
+    bank_account = db.Column(db.String(20), nullable=False)
+    gender = db.Column(db.String(200), nullable=False)
+    joining_date = db.Column(db.Date, nullable=False)
+    birth_date = db.Column(db.Date, nullable=False)
+    contact = db.Column(db.String(15), nullable=False)
+
+
+class EmployeeSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Employee
+
+employee_schema = EmployeeSchema()
+
+# Add validation methods to the Employee class
+def validate_email(self):
+    if '@' not in self.email:
+        raise ValueError('Invalid email address')
+
+def validate_password(self, password):
+    # Password must be at least 6 characters long
+    if len(password) < 6:
+        raise ValueError('Password must be at least 6 characters long')
+
+    # Password must contain at least one uppercase letter
+    if not any(char.isupper() for char in password):
+        raise ValueError('Password must contain at least one uppercase letter')
+
+    # Password must contain at least one special character
+    special_characters = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?"
+    if not any(char in special_characters for char in password):
+        raise ValueError('Password must contain at least one special character')
 
 class Admin(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,54 +77,12 @@ class Admin(db.Model, SerializerMixin):
             raise ValueError('Invalid email address')
 
 
-class Employee(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(200), nullable=False)
-    last_name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(200), nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-    department = db.Column(db.String(200), nullable=False)
-    role = db.Column(db.String(200), nullable=False)
-    bank_account = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(200), nullable=False)
-    joining_date = db.Column(db.Date, nullable=False)
-    birth_date = db.Column(db.Date, nullable=False)
-    contact = db.Column(db.Integer, nullable=False)
-
-    def validate_email(self):
-        if '@' not in self.email:
-            raise ValueError('Invalid email address')
-
-    def validate_password(self, password):
-        # Password must be at least 6 characters long
-        if len(password) < 6:
-            raise ValueError('Password must be at least 6 characters long')
-
-        # Password must contain at least one uppercase letter
-        if not any(char.isupper() for char in password):
-            raise ValueError('Password must contain at least one uppercase letter')
-
-        # Password must contain at least one special character
-        special_characters = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?"
-        if not any(char in special_characters for char in password):
-            raise ValueError('Password must contain at least one special character')
         
 class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(200), nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
-class Payroll(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    employee_ID = db.Column(db.Integer,db.ForeignKey('employee.id'),nullable=True)
-    month = db.Column(db.Integer,nullable=False)
-    year = db.Column(db.Integer,nullable=False)
-    gross = db.Column(db.Float,nullable=False)
-    allowances = db.Column(db.Float,nullable=True)
-    deductions = db.Column(db.Float,nullable=True)
-    bonuses = db.Column(db.Float,nullable=True)
-    taxes = db.Column(db.Float,nullable=True)
-    net = db.Column(db.Float,nullable=False)
 
 class Leavetype(db.Model):
     id = db.Column(db.Integer,primary_key=True)

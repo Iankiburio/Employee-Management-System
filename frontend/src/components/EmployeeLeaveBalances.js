@@ -5,6 +5,7 @@ import { FaEye } from "react-icons/fa";
 
 const EmployeeLeaveBalances = ({ type, onSelect }) => {
   return (
+    <Section>
     <div>
       <h2> My Leave Balances</h2>
       <table className="w3-table-all" style={{ marginTop: "20px" }}>
@@ -40,6 +41,7 @@ const EmployeeLeaveBalances = ({ type, onSelect }) => {
         </tbody>
       </table>
     </div>
+    </Section>
   );
 };
 

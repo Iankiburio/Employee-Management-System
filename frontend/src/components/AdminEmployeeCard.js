@@ -1,13 +1,13 @@
 import React from 'react';
 import '../css/employeecard.css';
 
-const AdminEmployeeCard = ({ employee , onDelete, onUpdate}) => {
+const AdminEmployeeCard = ({ employee, onDelete, onUpdate }) => {
+  // Function to handle update button click
+  const handleUpdateClick = () => {
+    // Call the onUpdate callback function and pass the employee_id
+    onUpdate(employee.id);
+  };
 
-    // Function to handle update button click
-    const handleUpdateClick = () => {
-      // Call the onUpdate callback function and pass the entire employee object
-      onUpdate(employee);
-    };
   return (
     <div className="employee-card">
       <img className='employee-icon' src={employee.gender} alt='Profile' />
@@ -23,7 +23,7 @@ const AdminEmployeeCard = ({ employee , onDelete, onUpdate}) => {
         <p>Contact: {employee.contact}</p>
       </div>
       <div className="employee-actions">
-        <button className="update-button" employee={employee} onClick={handleUpdateClick}>Update</button>
+        <button className="update-button" onClick={handleUpdateClick}>Update</button>
         <button className="delete-button" onClick={() => onDelete(employee.id)}>Delete</button>
       </div>
     </div>

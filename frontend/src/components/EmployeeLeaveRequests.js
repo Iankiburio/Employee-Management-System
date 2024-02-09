@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import Section from "./Section";
 
 import { useNavigate } from "react-router-dom";
 
@@ -42,6 +43,7 @@ const EmployeeLeaveRequest = () => {
   //updated employee leave
 
   return (
+    <Section>
     <div style={{ width: "100%" }}>
       <div
         style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
@@ -110,6 +112,7 @@ const EmployeeLeaveRequest = () => {
         </tbody>
       </table>
     </div>
+    </Section>
   );
 };
 

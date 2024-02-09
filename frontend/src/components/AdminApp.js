@@ -48,7 +48,7 @@ function AdminApp() {
             <Route path="leave-Allocation" element={<LeaveAllocation />} />
             <Route path="leave-requests" element={<LeaveRequests />} />
             <Route path="report" element={<Report />} />
-            <Route path="logout" element={<Logout />} />
+            <Route path="/" element={<Logout />} />
             <Route path="notifications" element={<AdminNotifications />} />
             <Route path="communication" element={<EmployeeCommunication />} />
           </Routes>

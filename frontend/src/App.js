@@ -241,9 +241,9 @@ function App() {
           element={<AdminSignUp onAdminSignup={handleAdminSignup} />}
         />
         <Route
-          path="/employee-login"
-          element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />}
-        />
+  path="/employee-login"
+  element={<EmployeeLogIn onEmployeeLogin={handleEmployeeLogin} />}
+/>
       </Routes>
     </Router>
   );

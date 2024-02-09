@@ -4,21 +4,15 @@ import "../css/login.css";
 import Background from "./Background";
 
 import AppContext from "../Provider/AppContext";
-
 import useaxios from "../hooks/useaxios";
-
 import { useNavigate } from "react-router-dom";
 
-function EmployeeLogIn({}) {
+function EmployeeLogIn({ onEmployeeLogin }) {
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
   const [password, setPassword] = useState("");
 
-  const [status, setStatus] = useState(null);
-  const [msg, setMsg] = useState(null);
-
   const { setUser } = useContext(AppContext);
-
   const navigate = useNavigate();
   const request = useaxios();
 
@@ -34,7 +28,7 @@ function EmployeeLogIn({}) {
     setPassword(e.target.value);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -43,13 +37,18 @@ function EmployeeLogIn({}) {
       password,
     };
 
-    userLogin(user);
+    const res = await userLogin(user);
+
+    if (res && res !== "error") {
+      onEmployeeLogin(user); // Calling the callback function
+      navigate("/employee/dashboard");
+    }
   };
 
   async function userLogin(data) {
     let res = await request({
       method: "POST",
-      url: "adminlogin",
+      url: "employeelogin",
       body: data,
     });
 
@@ -58,7 +57,7 @@ function EmployeeLogIn({}) {
     }
 
     setUser(res);
-    navigate("/employee/dashboard");
+    return res;
   }
 
   return (
@@ -67,27 +66,27 @@ function EmployeeLogIn({}) {
       <div className="signup-container">
         <h2>Log in | Employee</h2>
         <div>
-        <label htmlFor="username">First name:</label>
-        <input
-          type="text"
-          id="first_name"
-          value={first_name}
-          onChange={handleFirstnameChange}
-        />
-        <label htmlFor="username">Last name:</label>
-        <input
-          type="text"
-          id="second_name"
-          value={last_name}
-          onChange={handleLastnameChange}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
+          <label htmlFor="username">First name:</label>
+          <input
+            type="text"
+            id="first_name"
+            value={first_name}
+            onChange={handleFirstnameChange}
+          />
+          <label htmlFor="username">Last name:</label>
+          <input
+            type="text"
+            id="second_name"
+            value={last_name}
+            onChange={handleLastnameChange}
+          />
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
         </div>
         <button onClick={handleLogin}>Log in</button>
       </div>

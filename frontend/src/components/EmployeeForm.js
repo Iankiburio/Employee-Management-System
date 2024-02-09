@@ -100,7 +100,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
             <label htmlFor="department">Department:</label>
             <input
               type="text"
-              id="department"
+              id="employee-department"
               name="department"
               value={employeeData.department}
               onChange={handleChange}
@@ -112,7 +112,7 @@ const EmployeeForm = ({ onCreateEmployee, onCloseForm }) => {
             <label htmlFor="role">Role:</label>
             <input
               type="text"
-              id="role"
+              id="employee-role"
               name="role"
               value={employeeData.role}
               onChange={handleChange}

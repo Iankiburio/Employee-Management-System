@@ -42,6 +42,7 @@ const LeaveRequests = () => {
   }
 
   return (
+    <Section>
     <div>
       <h2>Leave Requests</h2>
       <table className="w3-table-all" style={{ marginTop: "20px" }}>
@@ -66,6 +67,7 @@ const LeaveRequests = () => {
       </table>
       <div className=" w3-container"></div>
     </div>
+    </Section>
   );
 };
 

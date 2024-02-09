@@ -5,8 +5,9 @@ import { FaEye } from "react-icons/fa";
 
 const LeaveType = ({ type, onSelect }) => {
   return (
+    <Section>
     <div>
-      <h2>Leave Balances</h2>
+      <h2>Leave types</h2>
       <table className="w3-table-all" style={{ marginTop: "20px" }}>
         <thead>
           <tr>
@@ -40,6 +41,7 @@ const LeaveType = ({ type, onSelect }) => {
         </tbody>
       </table>
     </div>
+    </Section>
   );
 };
 

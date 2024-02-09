@@ -37,7 +37,7 @@ function AdminDashboard() {
       .then((response) => response.json())
       .then((data) => {
         console.log('API Response:', data);
-        setLeaveRequests(data.leave_requests);
+        setLeaveRequests(data);
       })
       .catch((error) => {
         console.error('Error fetching employees:', error);
@@ -54,9 +54,9 @@ function AdminDashboard() {
   let leaves = leaveTypes.length;
   let leaves_requests = leaveRequests.length;
 
-  let approved = (leaveRequests.filter(approved => approved.action==='approve')).length;  
-  let rejected = (leaveRequests.filter(rejected => rejected.action==='reject')).length; 
-  let open = (leaveRequests.filter(rejected => rejected.status==='open')).length; 
+  let approved = (leaveRequests.filter(approved => approved.status==='approved')).length;  
+  let rejected = (leaveRequests.filter(rejected => rejected.status==='reject')).length; 
+  let open = (leaveRequests.filter(rejected => rejected.status==='Pending')).length; 
 
   function countUniqueValuesByKey(employees, key) {
     const uniqueValues = new Set();
@@ -97,7 +97,7 @@ function AdminDashboard() {
             <i className="fas fa-calendar-alt"></i> {/* Replace with your icon */}
             <div className="card-content">
               <p>Listed Leave Types</p>
-              <h2>{leaves}</h2>
+              <h2>3</h2>
             </div>
           </div>
         </div>
@@ -118,19 +118,19 @@ function AdminDashboard() {
           </div>
           <div className="card">
             <div className="card-content">
-              <p>Rejected Leaves</p>
+              <p>Rejected</p>
               <h2>{rejected}</h2>
             </div>
           </div>
           <div className="card">
             <div className="card-content">
-              <p>New Leave Requests</p>
+              <p>Pending</p>
               <h2>{open}</h2>
             </div>
           </div>
           <div className="card">
             <div className="card-content">
-              <p>Approved Leave</p>
+              <p>Approved</p>
               <h2>{approved}</h2>
             </div>
           </div>

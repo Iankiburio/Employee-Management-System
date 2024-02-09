@@ -87,8 +87,10 @@ function AdminLogIn() {
           value={password}
           onChange={handlePasswordChange}
         />
+        <div>
         <button onClick={handleLogin}>Log in</button>
         <Link to="/admin-signup">Sign Up</Link>
+      </div>
       </div>
     </div>
   );

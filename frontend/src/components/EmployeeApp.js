@@ -41,7 +41,7 @@ function EmployeeApp() {
             <Route path="dashboard" element={<EmployeeDashboard currentUser={username}/>} />
             <Route path="my-profile" element={<EmployeeProfile currentUser={username}/>} />
             <Route path="calendar" element={<EmployeeCalendar />} />
-            <Route path="salary" element={<EmployeeSalary />} />
+            <Route path="salary" element={<EmployeeSalary currentUser={username}/>} />
             <Route path="communication" element={<EmployeeCommunication />} />
             <Route path="notifications" element={<EmployeeNotifications />} />
             <Route path="leave-requests" element={<EmployeeLeaveRequests />} />

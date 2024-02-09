@@ -7,12 +7,15 @@ import Department from "./AdminDepartment";
 import AdminNotifications from "./AdminNotifications";
 import Employees from "./AdminEmployees";
 import Salary from "./AdminSalary";
+import PayrollPage from './PayrollPage';
 import LeaveRequests from "./AdminLeaveRequests";
 import Report from "./AdminReport";
 import Logout from "./LogOut";
 import { Route, Routes } from "react-router-dom";
-import Section from "./Section";
+import Section from "./Section"; // Make sure this path is correct
+
 import "../css/adminapp.css";
+
 function AdminApp() {
   const [username, setUsername] = useState("");
 
@@ -45,8 +48,10 @@ function AdminApp() {
             <Route path="salary" element={<Salary />} />
             <Route path="leave-requests" element={<LeaveRequests />} />
             <Route path="report" element={<Report />} />
-            <Route path="logout" element={<Logout />} />
             <Route path="notifications" element={<AdminNotifications />} />
+            {/* Add the following route for the PayrollPage */}
+            <Route path="payroll/:employeeId" element={<PayrollPage />} />
+            <Route path="logout" element={<Logout />} />
           </Routes>
         </Section>
       </div>

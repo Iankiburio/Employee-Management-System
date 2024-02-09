@@ -26,7 +26,7 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <h2>Admin Dashboard</h2>
+      <h2>Employee Salary</h2>
 
       {/* Section for Employee Names with Payroll and Attendance Buttons */}
       <div>
@@ -37,11 +37,8 @@ const AdminDashboard = () => {
               <li key={employee.employee_id}>
                 {employee.employee_name}{' '}
                 <Link to={`/admin/payroll/${employee.employee_id}`}>
-                  <button>Payroll</button>
+                  <button>Payroll Information</button>
                 </Link>{' '}
-                <Link to={`/admin/attendance/${employee.employee_id}`}>
-                  <button>Attendance</button>
-                </Link>
               </li>
             ))}
           </ol>

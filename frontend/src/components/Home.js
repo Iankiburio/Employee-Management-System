@@ -34,16 +34,16 @@ class Home extends React.Component {
         <nav className='homenavbar'>
           <ul>
             <li className={activeSection === 'about-app' ? 'active' : ''}>
-              <button onClick={() => this.handleNavClick('about-app')}>
+              <button className='home-button' onClick={() => this.handleNavClick('about-app')}>
                 About App
               </button>
             </li>
             <li className={activeSection === 'login' ? 'active' : ''}>
-              <button onClick={() => this.handleNavClick('login')}>
+              <button className='home-button' onClick={() => this.handleNavClick('login')}>
                 Admin and Employee Login
               </button>            
             <li className={activeSection === 'developers-team' ? 'active' : ''}>
-              <button onClick={() => this.handleNavClick('developers-team')}>
+              <button className='home-button' onClick={() => this.handleNavClick('developers-team')}>
                 Developers Team
               </button>
             </li>

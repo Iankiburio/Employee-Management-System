@@ -33,17 +33,6 @@ function AdminNavbar() {
                 Salary
               </Link>
             </li>
-
-            <li className="nav-item">
-              <Link to="/admin/report" className="nav-link active">
-                Report
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/admin/notifications" className="nav-link active">
-                Notifications
-              </Link>
-            </li>
             <li className="nav-item">
               <Link to="/admin/communication" className="nav-link active">
                 HR communication

@@ -53,9 +53,9 @@ function EmployeeDashboard({currentUser}) {
 console.log(currentUser)
   let leaves_requests = (leaveRequests.filter(approved => approved.employee.first_name===currentUser)).length;  
   
-  let approved = (leaveRequests.filter(approved => approved.action==='approve' && approved.employee.first_name===currentUser)).length;  
-  let rejected = (leaveRequests.filter(rejected => rejected.action==='reject'&& rejected.employee.first_name===currentUser)).length; 
-  let open = (leaveRequests.filter(rejected => rejected.status==='open'&& rejected.employee.first_name===currentUser)).length; 
+  let approved = (leaveRequests.filter(approved => approved.status==='approved' && approved.employee.first_name===currentUser)).length;  
+  let rejected = (leaveRequests.filter(rejected => rejected.status==='reject'&& rejected.employee.first_name===currentUser)).length; 
+  let open = (leaveRequests.filter(rejected => rejected.status==='Pending'&& rejected.employee.first_name===currentUser)).length; 
 
   function countUniqueValuesByKey(employees, key) {
     const uniqueValues = new Set();

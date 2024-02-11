@@ -8,6 +8,12 @@ const AdminEmployeeCard = ({ employee, onDelete, onUpdate }) => {
     onUpdate(employee.id);
   };
 
+  const handleDeleteClick = () => {
+    // Call the onUpdate callback function and pass the employee_id
+    console.log(employee.id);
+    onDelete(employee.id);
+  };
+
   return (
     <div className="employee-card">
       <img className='employee-icon' src={employee.gender} alt='Profile' />
@@ -21,10 +27,11 @@ const AdminEmployeeCard = ({ employee, onDelete, onUpdate }) => {
         <p>Birth date: {employee.birth_date}</p>
         <p>Joining date: {employee.joining_date}</p>
         <p>Contact: {employee.contact}</p>
+        <p>ID: {employee.id}</p>
       </div>
       <div className="employee-actions">
         <button className="update-button" onClick={handleUpdateClick}>Update</button>
-        <button className="delete-button" onClick={() => onDelete(employee.id)}>Delete</button>
+        <button className="delete-button" onClick={handleDeleteClick}>Delete</button>
       </div>
     </div>
   );

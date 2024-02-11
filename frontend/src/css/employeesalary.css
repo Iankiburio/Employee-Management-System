@@ -1,0 +1,20 @@
+.salary-Section {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+h2 {
+    margin-bottom: 20px;
+  }
+  
+h3 {
+    margin-top: 20px;
+  }
+  
+p {
+    margin-bottom: 10px;
+  }
+  

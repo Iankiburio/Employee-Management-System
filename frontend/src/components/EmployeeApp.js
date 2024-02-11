@@ -47,7 +47,7 @@ function EmployeeApp() {
             <Route path="notifications" element={<EmployeeNotifications />} />
             <Route path="Leave Balances" element={<EmployeeLeaveBalances />} />
             <Route path="leave-requests" element={<EmployeeLeaveRequests />} />
-            <Route path="leave-requests/add" element={<LeaveRequestForm />} />
+            <Route path="leave-requests/add" element={<LeaveRequestForm currentUser={username}/>} />
             <Route path="/" element={<Logout/>} />
           </Routes>
         </Section>

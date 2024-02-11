@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import '../css/payrollpage.css';
+import Section from './Section';
 
 const PayrollPage = () => {
   const { employeeId } = useParams();
@@ -64,7 +66,8 @@ const PayrollPage = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <Section>
+    <div className="salary-container mt-4">
       {payrollData ? (
         <div>
           <h3>Employee Information</h3>
@@ -85,12 +88,12 @@ const PayrollPage = () => {
           <h3 className="mt-4">Edit Payroll Information</h3>
           <form>
             <div className="mb-3">
-              <label htmlFor="base_salary" className="form-label">
+              <label htmlFor="base_salary" className="salary-form-label">
                 Base Salary:
               </label>
               <input
                 type="number"
-                className="form-control"
+                className="salary-form-control"
                 id="base_salary"
                 name="base_salary"
                 value={editablePayroll.base_salary}
@@ -108,6 +111,7 @@ const PayrollPage = () => {
         <p>Loading...</p>
       )}
     </div>
+    </Section>
   );
 };
 

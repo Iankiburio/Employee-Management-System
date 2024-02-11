@@ -1,8 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import "../css/salary.css";
-import Section from './Section';
+import '../css/AdminSalary.css'; // Import a CSS file for styling
 
 const AdminDashboard = () => {
   const [employeeNames, setEmployeeNames] = useState([]);
@@ -27,27 +27,37 @@ const AdminDashboard = () => {
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
-    <Section>
-    <div className='salary-section'>
+    <div>
       <h2>Employee Salary</h2>
 
       {/* Section for Employee Names with Payroll and Attendance Buttons */}
-      <div className="salary-list">
+      <div>
         {employeeNames.length > 0 ? (
-          employeeNames.map((employee) => (
-            <div className="salary-card" key={employee.employee_id}>
-              <div className="employee-name">{employee.employee_name}</div>
-              <Link to={`/admin/payroll/${employee.employee_id}`}>
-                <button className="payroll-button">Payroll Information</button>
-              </Link>
-            </div>
-          ))
+          <table className="employee-table">
+            <thead>
+              <tr>
+                <th>Employee Name</th>
+                <th>Payroll</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employeeNames.map((employee) => (
+                <tr key={employee.employee_id}>
+                  <td>{employee.employee_name}</td>
+                  <td>
+                    <Link to={`/admin/payroll/${employee.employee_id}`}>
+                      <button style={{ backgroundColor: '#30797e', color: 'white' }}>Payroll Information</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <p>No employee names available.</p>
         )}
       </div>
     </div>
-    </Section>
   );
 };
 

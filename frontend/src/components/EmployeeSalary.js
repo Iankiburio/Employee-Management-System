@@ -53,6 +53,10 @@ const EmployeeSalary = ({ currentUser }) => {
     return <p>Error: {error}</p>;
   }
 
+  function formatNumber(number) {
+    return new Intl.NumberFormat('en-US').format(number);
+  }
+
   return (
     <Section>
       <div className='salary-Section'>
@@ -61,23 +65,26 @@ const EmployeeSalary = ({ currentUser }) => {
           <h3>Salary Slip</h3>
           {salarySlip && (
             <div>
-              <p>Name: {salarySlip.name}</p>
-              <p>Generation Date: {new Date(salarySlip.payroll_data.generation_date).toLocaleString()}</p>
-              <p>Base Salary: Kshs {salarySlip.payroll_data.base_salary}</p>
-              <p>Bonuses: {salarySlip.payroll_data.bonuses}</p>
-              <p>Deductions: {salarySlip.payroll_data.deductions}</p>
-              <p>Gross Pay: Kshs {salarySlip.payroll_data.gross_pay}</p>
-              <p>Net Salary: Kshs {salarySlip.payroll_data.net_salary}</p>
-            </div>
+            <p>Name: {salarySlip.name}</p>
+            <p>Generation Date: {new Date(salarySlip.payroll_data.generation_date).toLocaleString()}</p>
+            <p>Base Salary: Kshs {formatNumber(salarySlip.payroll_data.base_salary)}</p>
+            <p>Bonuses: Kshs {formatNumber(salarySlip.payroll_data.bonuses)}</p>
+            <p>Tax: Kshs {formatNumber(salarySlip.payroll_data.tax)}</p>
+            <p>Deductions: Kshs {formatNumber(salarySlip.payroll_data.deductions)}</p>
+            <p>Gross Pay: Kshs {formatNumber(salarySlip.payroll_data.gross_pay)}</p>
+            <p>Net Salary: Kshs {formatNumber(salarySlip.payroll_data.net_salary)}</p>
+          </div>
           )}
 
           <h3>Tax, Deductions, and Bonuses</h3>
           {salarySlip && (
             <div>
               <p>Bonuses Percentage: {salarySlip.payroll_data.bonuses_percentage * 100} %</p>
+              <p>Bonuses:Kshs {formatNumber(salarySlip.payroll_data.bonuses)}</p>
               <p>Deductions Percentage: {salarySlip.payroll_data.deductions_percentage * 100} %</p>
-              <p>Tax Amount: Kshs {salarySlip.payroll_data.tax}</p>
+              <p>Deductions:Kshs {formatNumber(salarySlip.payroll_data.deductions)}</p>
               <p>Tax Percentage: {salarySlip.payroll_data.tax_percentage * 100} %</p>
+              <p>Tax Amount: Kshs {formatNumber(salarySlip.payroll_data.tax)}</p>
             </div>
           )}
         </div>

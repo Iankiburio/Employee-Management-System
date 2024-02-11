@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import "../css/salary.css";
+import Section from './Section';
 
 const AdminDashboard = () => {
   const [employeeNames, setEmployeeNames] = useState([]);
@@ -25,28 +27,27 @@ const AdminDashboard = () => {
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
-    <div>
+    <Section>
+    <div className='salary-section'>
       <h2>Employee Salary</h2>
 
       {/* Section for Employee Names with Payroll and Attendance Buttons */}
-      <div>
-        <h3>Employee Names</h3>
+      <div className="salary-list">
         {employeeNames.length > 0 ? (
-          <ol>
-            {employeeNames.map((employee) => (
-              <li key={employee.employee_id}>
-                {employee.employee_name}{' '}
-                <Link to={`/admin/payroll/${employee.employee_id}`}>
-                  <button>Payroll Information</button>
-                </Link>{' '}
-              </li>
-            ))}
-          </ol>
+          employeeNames.map((employee) => (
+            <div className="salary-card" key={employee.employee_id}>
+              <div className="employee-name">{employee.employee_name}</div>
+              <Link to={`/admin/payroll/${employee.employee_id}`}>
+                <button className="payroll-button">Payroll Information</button>
+              </Link>
+            </div>
+          ))
         ) : (
           <p>No employee names available.</p>
         )}
       </div>
     </div>
+    </Section>
   );
 };
 

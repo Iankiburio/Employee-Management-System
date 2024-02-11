@@ -44,11 +44,6 @@ function EmployeeNavbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/employee/notifications" className="nav-link active">
-                Notifications
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link to="/" className="nav-link active">
                 Log out
               </Link>

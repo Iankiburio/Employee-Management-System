@@ -92,3 +92,13 @@ color:#022c28;}
 #about-app {
   margin: 100 px;
 }
+
+.home-button {
+  background: none;
+  border: none;
+  color: inherit; /* Keeps the default text color */
+  font: inherit; /* Keeps the default font */
+  padding: 0; /* Removes padding */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  outline: none; /* Removes the default focus border */
+}

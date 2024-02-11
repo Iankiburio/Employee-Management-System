@@ -11,6 +11,33 @@ function Employees() {
   const [isFormVisible2, setIsFormVisible2] = useState(false);
   const [employeeIdToUpdate, setEmployeeIdToUpdate] = useState(null);
 
+
+  const createEmployee = (newEmployee) => {
+    setEmployees([...employees, newEmployee]);
+    fetch('http://127.0.0.1:5000/employeesignup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newEmployee),
+    })
+      .then((res) => {
+        if (res.status === 200 || res.status === 201) {
+          // Handle successful creation
+          window.location.href = '/admin/employees';
+        } else {
+          // Handle login error here, e.g., show an error message
+        }
+        return res.json();
+      })
+      .then(() => {
+
+      })
+      .catch((error) => {
+        console.error('Error adding new employee:', error);
+      });
+  };
+
   // Callback function for deleting an employee
   const handleDeleteEmployee = (id) => {
     // Send a DELETE request to the server to delete the employee with the given ID
@@ -114,7 +141,7 @@ function Employees() {
           ))}
         </div>
         {isFormVisible && (
-          <EmployeeForm onCreateEmployee={fetchEmployees} onCloseForm={closeForm} />
+          <EmployeeForm onCreateEmployee={createEmployee} onCloseForm={closeForm} />
         )}
         {isFormVisible2 && (
           <EmployeeProfileForm

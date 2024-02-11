@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Section from './Section';
+import '../css/employeesalary.css';
 
 const EmployeeSalary = ({ currentUser }) => {
   const [loading, setLoading] = useState(true);
@@ -54,7 +55,7 @@ const EmployeeSalary = ({ currentUser }) => {
 
   return (
     <Section>
-      <div>
+      <div className='salary-Section'>
         <h2>Employee Salary Details</h2>
         <div>
           <h3>Salary Slip</h3>

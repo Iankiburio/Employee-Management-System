@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Section from "./Section";
 import EmployeeLeaveRequests from "./EmployeeLeaveRequests";
@@ -7,7 +7,29 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../css/leaveRequestForm.css";
 
-const LeaveRequestForm = () => {
+const LeaveRequestForm = ({currentUser}) => {
+
+  const [employees, setEmployees] = useState([]);
+
+    const fetchEmployees = () => {
+        fetch('http://127.0.0.1:5000/employees')
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('API Response:', data);
+            setEmployees(data.employees); // Update the employees state with fetched data
+          })
+          .catch((error) => {
+            console.error('Error fetching employees:', error);
+          });
+      };
+      
+    useEffect(()=>{
+        fetchEmployees()
+      },[]);
+  
+  let user = employees.filter(employees => employees.first_name===currentUser);
+  console.log(user)
+
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
   const [startDate, setStartDate] = useState(
@@ -29,6 +51,7 @@ const LeaveRequestForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    submitLeaveRequest();
     //onSubmit(selectedType, startDate, endDate);
   };
 
@@ -113,6 +136,7 @@ const LeaveRequestForm = () => {
   };
 
   return (
+    <Section>
     <form onSubmit={handleSubmit}>
       <div className=" " style={{ backgroundColor: "white", padding: "10px" }}>
         <h2>Leave Application </h2>
@@ -204,6 +228,7 @@ const LeaveRequestForm = () => {
         </div>
       </div>
     </form>
+    </Section>
   );
 };
 

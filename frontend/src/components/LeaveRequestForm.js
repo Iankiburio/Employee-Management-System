@@ -26,9 +26,8 @@ const LeaveRequestForm = ({currentUser}) => {
     useEffect(()=>{
         fetchEmployees()
       },[]);
-  
+      console.log(currentUser)
   let user = employees.filter(employees => employees.first_name===currentUser);
-  console.log(user[0].id)
 
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
@@ -221,7 +220,6 @@ const LeaveRequestForm = ({currentUser}) => {
           <button
             type="submit"
             className="w3-button w3-teal w3-rounded w3-margin"
-            onClick={submitLeaveRequest}
           >
             Submit
           </button>

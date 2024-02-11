@@ -28,7 +28,7 @@ const LeaveRequestForm = ({currentUser}) => {
       },[]);
   
   let user = employees.filter(employees => employees.first_name===currentUser);
-  console.log(user)
+  console.log(user[0].id)
 
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
@@ -116,7 +116,7 @@ const LeaveRequestForm = ({currentUser}) => {
       action: "Approve",
       Return_date: returnDate,
       leave_balances: "20",
-      employee_ID: 3,
+      employee_ID:user[0].id,
     });
 
     var requestOptions = {

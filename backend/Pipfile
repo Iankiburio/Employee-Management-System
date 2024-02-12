@@ -13,6 +13,7 @@ install = "*"
 psycopg2-binary = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
+marshmallow-sqlalchemy = "*"
 
 [dev-packages]
 

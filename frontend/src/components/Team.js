@@ -30,7 +30,7 @@ function Team(){
                 <p>Fullstack developer</p>
             </div>
             <div className='individual-card'>
-                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoB9MI5iNDtogDQXCYFNijLtKtWCyz4q97DQ&usqp=CAU'
+                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2s0rsNNpUtO5yD3FuHI-NiPxOob7eFYnr8Fmd_CnhPF2DEWKYoYG_Lv2jCw&s'
                 className='about-img'
                 alt='Developer 1'></img>
                 <h3>Ian Kiburio</h3>

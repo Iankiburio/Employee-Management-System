@@ -383,6 +383,44 @@ def get_employee_leave_requests(employee_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # Return error response with status code 500
     return jsonify(all_data)
+
+
+@app.route("/employee/leave-balance/<int:employee_id>", methods=["GET"])
+def get_employee_leave_balance(employee_id):
+    # Retrieve the employee's leave balance from the database based on the employee ID
+
+    the_employee=Employee.query.filter_by(id=employee_id)
+
+    if the_employee is None:
+        return jsonify({'error': 'Employee not found'}), 404
+
+    employee_balance = EmployeeBalances.query.filter_by(employee_id=employee_id).first()
+
+    # Check if the employee exists
+    if employee_balance is None:
+       leave_balance = EmployeeBalances(employee_id=employee_id)
+       db.session.add(leave_balance)
+       db.session.commit()
+       employee_balance = EmployeeBalances.query.filter_by(employee_id=employee_id).first()
+
+    # Construct the response
+    response = {
+        'employee_id': employee_balance.employee_id,
+        'annual_leave': employee_balance.annual_leave,
+        'annual_leave_entitled': employee_balance.annual_leave_entitled,
+        'study_leave': employee_balance.study_leave,
+        'study_leave_entitled': employee_balance.study_leave_entitled,
+        'sick_leave': employee_balance.sick_leave,
+        'maternity_leave': employee_balance.maternity_leave,
+        'maternity_leave_entitled': employee_balance.maternity_leave_entitled,
+        'paternity_leave': employee_balance.pertenity_leave,
+        'paternity_leave_entitled': employee_balance.pertenity_leave_entitled
+        # Add more leave types as needed
+    }
+
+    return jsonify(response), 200
+
+
 # Route to create a new leave request
 @app.route('/leave-requests', methods=['POST'])
 def create_leave_request():
@@ -412,9 +450,9 @@ def create_leave_request():
     return jsonify({'message': 'Leave request created successfully'})
 
 
-@app.route("/leave-request/update",methods=["PUT"])
+@app.route("/leave-request/update", methods=["PUT"])
 def update_leave_request():
-   # Extract id, status, and admin_comment from the request body
+    # Extract id, status, and admin_comment from the request body
     data = request.json
     request_id = data.get('id')
     status = data.get('status')
@@ -428,37 +466,44 @@ def update_leave_request():
     leave_request = Employee_Leaverequest.query.get_or_404(request_id)
     print(leave_request.status)
 
-    if leave_request.status.lower() !="pending":
+    if leave_request.status.lower() != "pending":
         return jsonify({'message': 'Leave request status should be pending'})
 
-  
-    no_days=days(leave_request.start_date,leave_request.end_date)
+    no_days = days(leave_request.start_date, leave_request.end_date)
 
-    print(no_days)
-
-    leaveBalance=EmployeeBalances.query.filter_by(employee_id=leave_request.employee_ID).first()
-    leave_type=leave_map.get(str(leave_request.leavetype_ID))
+    leave_balance = EmployeeBalances.query.filter_by(employee_id=leave_request.employee_ID).first()
+    leave_type = leave_map.get(str(leave_request.leavetype_ID))
 
     if leave_type is None:
-       return jsonify({'message': 'Leave request status should be pending'})
+        return jsonify({'message': 'Invalid leave type'})
 
-    print("leave_type",leave_type)
-    print("leaveBalance",leaveBalance)
-    return "ok"
+    print("leave_type", leave_type)
+    print("leave_balance", leave_balance)
+
+    # Check if leave balance exists for the employee
+    if leave_balance is None:
+        return jsonify({'error': 'Leave balance does not exist for the employee'})
+
     # Update the leave request object
     if status is not None:
         leave_request.status = status
     if admin_comment is not None:
         leave_request.admin_comment = admin_comment
 
-    if status.lower() =="approved":
+    # Update leave balance if status is approved
+    if status.lower() == "approved":
+        if getattr(leave_balance, leave_type.lower()) < no_days:
+            return jsonify({'error': 'Insufficient leave balance'})
 
-        pass
+        setattr(leave_balance, leave_type.lower(), getattr(leave_balance, leave_type.lower()) - no_days)
 
     # Commit the changes to the database
     db.session.commit()
+    print("leave_balance", leave_balance)
 
     return jsonify({'message': 'Leave request updated successfully'}), 200
+
+
 # Route to get all leave types
 @app.route('/leave-types', methods=['GET'])
 def get_leave_types():

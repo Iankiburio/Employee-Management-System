@@ -44,7 +44,7 @@ class EmployeeBalances(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False, unique=True)
     annual_leave = db.Column(db.Integer, nullable=False, default=30)
-    annual_leave_entitled = db.Column(db.Integer)
+    annual_leave_entitled = db.Column(db.Integer, nullable=False, default=30)
     study_leave = db.Column(db.Integer, nullable=False, default=15)
     study_leave_entitled = db.Column(db.Integer, nullable=False, default=15)
     sick_leave = db.Column(db.Integer, nullable=False, default=20)

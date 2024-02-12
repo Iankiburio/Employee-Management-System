@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../css/AdminSalary.css'; // Import a CSS file for styling
+import Section from './Section';
+
 
 const AdminDashboard = () => {
   const [employeeNames, setEmployeeNames] = useState([]);
@@ -27,6 +29,7 @@ const AdminDashboard = () => {
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
+    <Section>
     <div>
       <h2>Employee Salary</h2>
 
@@ -58,6 +61,7 @@ const AdminDashboard = () => {
         )}
       </div>
     </div>
+    </Section>
   );
 };
 

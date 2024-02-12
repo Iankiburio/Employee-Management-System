@@ -4,9 +4,31 @@ import Section from "./Section";
 
 import { useNavigate } from "react-router-dom";
 
-const EmployeeLeaveRequest = () => {
+const EmployeeLeaveRequest = ({currentUser}) => {
+
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [leaveRequests, setLeaveRequests] = useState([]);
+
+  const fetchLeaveRequests = () => {
+    fetch('http://127.0.0.1:5000/leave-requests')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('API Response:', data);
+        setLeaveRequests(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching employees:', error);
+      });
+  };
+  
+  useEffect(()=>{
+    fetchLeaveRequests()
+  },[]);
+
+console.log(currentUser)
+  let leaves_requests = (leaveRequests.filter(approved => approved.employee.first_name===currentUser));  
+  console.log(leaves_requests)
 
   useEffect(() => {
     getData();
@@ -18,7 +40,7 @@ const EmployeeLeaveRequest = () => {
       redirect: "follow",
     };
 
-    fetch("http://127.0.0.1:5000/leave-requests/3", requestOptions)
+    fetch("http://127.0.0.1:5000/leave-requests", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -71,14 +93,14 @@ const EmployeeLeaveRequest = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((doc, index) => {
+          {leaves_requests.map((doc) => {
             return (
               <tr>
                 <td>{doc?.id || ""}</td>
                 <td>{doc?.leave_type?.leave_description || ""}</td>
                 <td>{doc?.start_date || ""}</td>
                 <td>{doc?.end_date || ""}</td>
-                <td>{doc?.Return_date || ""}</td>
+                <td>{doc?.return_date || ""}</td>
                 <td>{getDays(doc.start_date, doc.end_date) || "0"}</td>
                 <td>{doc?.leave_balances || ""} </td>
                 <td>

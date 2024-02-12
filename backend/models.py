@@ -38,6 +38,26 @@ class Employee(db.Model, SerializerMixin):
     birth_date = db.Column(db.Date, nullable=False)
     contact = db.Column(db.String(15), nullable=False)
 
+class EmployeeBalances(db.Model):
+    __tablename__ = 'employee_balances'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False, unique=True)
+    annual_leave = db.Column(db.Integer, nullable=False, default=30)
+    annual_leave_entitled = db.Column(db.Integer)
+    study_leave = db.Column(db.Integer, nullable=False, default=15)
+    study_leave_entitled = db.Column(db.Integer, nullable=False, default=15)
+    sick_leave = db.Column(db.Integer, nullable=False, default=20)
+    maternity_leave=db.Column(db.Integer, nullable=False, default=90)
+    maternity_leave_entitled=db.Column(db.Integer, nullable=False, default=90)
+    pertenity_leave=db.Column(db.Integer, nullable=False, default=14)
+    pertenity_leave_entitled=db.Column(db.Integer, nullable=False, default=14)
+
+    employee = db.relationship('Employee', backref='balance', uselist=False)
+
+    def __repr__(self):
+        return f"EmployeeBalances(id={self.id}, employee_id={self.employee_id}, annual_leave={self.annual_leave}, study_leave={self.study_leave})"
+
 
 class EmployeeSchema(SQLAlchemyAutoSchema):
     class Meta:

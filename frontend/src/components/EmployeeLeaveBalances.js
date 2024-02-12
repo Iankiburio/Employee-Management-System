@@ -38,6 +38,13 @@ const EmployeeLeaveBalances = ({ type, onSelect }) => {
             <td>20</td>
             <td></td>
           </tr>
+          <tr>
+            <td>3</td>
+            <td>Sick Leave</td>
+            <td>20</td>
+            <td>20</td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
     </div>

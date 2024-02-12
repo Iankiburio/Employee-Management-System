@@ -22,7 +22,7 @@ const EmployeeLeaveRequest = () => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setData(result?.leave_requests || []);
+        setData(result || []);
       })
       .catch((error) => console.log("error", error));
   }
@@ -44,55 +44,56 @@ const EmployeeLeaveRequest = () => {
 
   return (
     <Section>
-    <div style={{ width: "100%" }}>
-      <div
-        style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
-      >
-        <button
-          className="w3-btn w3-round-large w3-green"
-          style={{ fontSize: "20px" }}
-          onClick={() => navigate("add")}
+      <div style={{ width: "100%" }}>
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
         >
-          New Leave Request
-        </button>
-      </div>
-      <h2>Leave Application History</h2>
-      <table className="w3-table-all" style={{ marginTop: "20px" }}>
-        <thead>
-          <tr>
-            <th>#Id</th>
-            <th>Leave Type</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Return Date</th>
-            <th>Applied Days</th>
-            <th>Balance</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((doc, index) => {
-            return (
-              <tr>
-                <td>{doc?.id || ""}</td>
-                <td>{doc?.leave_type?.leave_description || ""}</td>
-                <td>{doc?.start_date || ""}</td>
-                <td>{doc?.end_date || ""}</td>
-                <td>{doc?.Return_date || ""}</td>
-                <td>{getDays(doc.start_date, doc.end_date) || "0"}</td>
-                <td>{doc?.leave_balances || ""} </td>
-                <td>
-                  <span
-                    className="w3-yellow w3-text-black w3-round"
-                    style={{ padding: "5px" }}
-                  >
-                    {doc?.status || ""}
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
-          {/* <tr>
+          <button
+            className="w3-btn w3-round-large w3-green"
+            style={{ fontSize: "20px" }}
+            onClick={() => navigate("add")}
+          >
+            New Leave Request
+          </button>
+        </div>
+        <h2>Leave Application History</h2>
+        <table className="w3-table-all" style={{ marginTop: "20px" }}>
+          <thead>
+            <tr>
+              <th>#Id</th>
+              <th>Leave Type</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Return Date</th>
+              <th>Applied Days</th>
+              <th>Balance</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((doc, index) => {
+              console.log(doc);
+              return (
+                <tr>
+                  <td>{doc?.id || ""}</td>
+                  <td>{doc?.leave_type?.leave_description || ""}</td>
+                  <td>{doc?.start_date || ""}</td>
+                  <td>{doc?.end_date || ""}</td>
+                  <td>{doc?.Return_date || ""}</td>
+                  <td>{getDays(doc.start_date, doc.end_date) || "0"}</td>
+                  <td>{doc?.leave_balances || ""} </td>
+                  <td>
+                    <span
+                      className="w3-yellow w3-text-black w3-round"
+                      style={{ padding: "5px" }}
+                    >
+                      {doc?.status || ""}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
+            {/* <tr>
             <td>1</td>
             <td>Annual Leave</td>
             <td>12/03/2024</td>
@@ -109,9 +110,9 @@ const EmployeeLeaveRequest = () => {
               </span>
             </td>
           </tr> */}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
     </Section>
   );
 };
